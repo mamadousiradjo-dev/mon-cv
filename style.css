@@ -1,0 +1,323 @@
+/* RÉINITIALISATION */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* PAGE*/
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #eeeeee;
+
+    padding: 40px;
+}
+
+
+/* CV PRINCIPAL */
+
+.cv {
+    width: 900px;
+
+    margin: auto;
+
+    background-color: white;
+
+    display: flex;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+}
+
+
+ /*COLONNE GAUCHE*/
+
+.sidebar {
+    width: 32%;
+
+    background-color: #123f63;
+
+    color: white;
+
+    padding: 35px;
+}
+
+
+/* PHOTO */
+
+.photo {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.photo img {
+    width: 145px;
+
+    height: 145px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 5px solid white;
+}
+
+
+/* BLOCS GAUCHE */
+
+.bloc {
+    margin-bottom: 35px;
+}
+
+
+/* TITRES GAUCHE */
+
+.bloc h2 {
+    font-size: 18px;
+
+    letter-spacing: 2px;
+
+    border-bottom: 2px solid white;
+
+    padding-bottom: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+/* TEXTES GAUCHE */
+
+.bloc p {
+    font-size: 14px;
+
+    margin-bottom: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* COMPÉTENCES */
+
+.competence {
+    margin-bottom: 15px;
+}
+
+.competence p {
+    margin-bottom: 6px;
+}
+
+
+/* BARRE */
+
+.barre {
+    width: 100%;
+
+    height: 7px;
+
+    background-color: #d5dce1;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+
+/* PROGRESSION */
+
+.progress {
+    height: 100%;
+
+    background-color: white;
+
+    border-radius: 10px;
+}
+
+
+/* NIVEAU DES COMPÉTENCES */
+
+.html {
+    width: 90%;
+}
+
+.css {
+    width: 85%;
+}
+
+.git {
+    width: 70%;
+}
+
+.linux {
+    width: 65%;
+}
+
+
+/* COLONNE DROITE*/
+
+.content {
+    width: 68%;
+
+    padding: 50px;
+}
+
+
+/* EN-TÊTE*/
+
+header {
+    margin-bottom: 40px;
+}
+
+
+/* NOM */
+
+header h1 {
+    font-size: 38px;
+
+    line-height: 1.1;
+
+    color: #123f63;
+
+    letter-spacing: 1px;
+}
+
+
+/* DEUXIÈME PARTIE DU NOM */
+
+header h1 span {
+    display: block;
+
+    font-weight: normal;
+}
+
+
+/* MÉTIER */
+
+header h3 {
+    margin-top: 12px;
+
+    font-size: 15px;
+
+    color: #777777;
+
+    letter-spacing: 3px;
+}
+
+
+/* SECTIONS */
+
+section {
+    margin-bottom: 35px;
+}
+
+
+/* TITRE DES SECTIONS */
+
+section > h2 {
+    color: #123f63;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+
+    border-bottom: 2px solid #123f63;
+
+    padding-bottom: 8px;
+
+    margin-bottom: 20px;
+}
+
+
+/* PROFIL*/
+
+section > p {
+    color: #555555;
+
+    line-height: 1.8;
+
+    font-size: 15px;
+}
+
+
+/* FORMATION / EXPÉRIENCE / PROJETS */
+
+.item {
+    border-left: 3px solid #123f63;
+
+    padding-left: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+/* TITRE */
+
+.item h3 {
+    color: #333333;
+
+    font-size: 17px;
+
+    margin-bottom: 6px;
+}
+
+
+/* DATE */
+
+.item span {
+    color: #123f63;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* DESCRIPTION */
+
+.item p {
+    color: #666666;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin-top: 8px;
+}
+
+
+/* VERSION MOBILE */
+
+@media (max-width: 800px) {
+
+    body {
+        padding: 10px;
+    }
+
+
+    .cv {
+        width: 100%;
+
+        display: block;
+    }
+
+
+    .sidebar {
+        width: 100%;
+    }
+
+
+    .content {
+        width: 100%;
+
+        padding: 30px;
+    }
+
+
+    header h1 {
+        font-size: 30px;
+    }
+
+}
