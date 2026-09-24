@@ -1,0 +1,16 @@
+{
+  "name": "mon_cv",
+  "version": "1.0.0",
+  "description": "Ce projet consiste à créer un CV professionnel sous forme",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./css/projets.css -o ./output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
