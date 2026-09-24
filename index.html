@@ -3,130 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon CV</title>
-    <!-- Lien vers le fichier CSS -->
-    <link rel="stylesheet" href="css/cv.css">
+
+    <title>CV - Mamadou Siradjo Baldé</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-<nav class="menu">
-        <a href="index.html">Accueil</a>
-        <a href="pages/projets.html">projets</a>
-        <a href="pages/contact.html">Contact</a>
+
+<body class="bg-gray-100 font-sans p-5 md:p-10">
+
+    <!-- MENU -->
+    <nav class="max-w-[1000px] mx-auto mb-6 bg-[#123f63] rounded-xl px-6 py-4 shadow-lg">
+        <div class="flex justify-center items-center gap-8">
+            <a href="index.html"
+               class="text-white font-bold hover:text-gray-200 transition">
+                Accueil
+            </a>
+
+            <a href="pages/projets.html"
+               class="text-white font-bold hover:text-gray-200 transition">
+                Projets
+            </a>
+
+            <a href="pages/contact.html"
+               class="text-white font-bold hover:text-gray-200 transition">
+                Contact
+            </a>
+        </div>
     </nav>
 
-    <div class="cv">
-        <!-- COLONNE GAUCHE  -->
-        <aside class="sidebar">
+
+    <!-- CV -->
+    <div class="max-w-[1000px] mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+
+        <!-- COLONNE GAUCHE -->
+        <aside class="md:w-[32%] bg-[#123f63] text-white p-7">
+
             <!-- PHOTO -->
-            <div class="photo">
-                <img src="images/MAMADOU SIRADJO BALDE.jpeg" alt="Ma photo" width="200">
+            <div class="flex justify-center mb-7">
+                <img
+                    src="images/MAMADOU SIRADJO BALDE.jpeg"
+                    alt="Photo de Mamadou Siradjo Baldé"
+                    class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-lg"
+                >
             </div>
 
 
             <!-- CONTACT -->
-            <div class="contact-item">
-                <span class="icon">📞</span>
-                <span>+224 624 18 55 74</span>
-                <div class="contact-item">
-                <span class="icon">✉️</span>
-                <span>mamadousiradjob49@gmail.com</span>
-                <div class="contact-item">
-                <span class="icon">📍</span>
-                <span>Conakry, Guinée</span>
-                
+            <div class="mb-8">
 
+                <h2 class="text-lg font-bold border-b border-white/40 pb-2 mb-4">
+                    CONTACT
+                </h2>
+
+                <div class="space-y-4 text-sm">
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">📞</span>
+                        <span>+224 624 18 55 47</span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">✉️</span>
+                        <span class="break-all">
+                            mamadousiradjob49@gmail.com
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">📍</span>
+                        <span>Conakry, Guinée</span>
+                    </div>
+
+                </div>
             </div>
-<br>
-            <!-- COMPÉTENCES -->
-            <div class="bloc">
 
-                <h2>COMPÉTENCES</h2>
 
-                <div class="competence">
-                    <p>HTML</p>
+            <!-- COMPETENCES -->
+            <div class="mb-8">
 
-                    <div class="barre">
-                        <div class="progress html"></div>
+                <h2 class="text-lg font-bold border-b border-white/40 pb-2 mb-5">
+                    COMPETENCES
+                </h2>
+
+                <div class="space-y-5">
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>HTML</span>
+                            <span>90%</span>
+                        </div>
+
+                        <div class="h-2 bg-white/30 rounded-full">
+                            <div class="h-2 bg-white rounded-full w-[90%]"></div>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="competence">
-                    <p>CSS</p>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>CSS</span>
+                            <span>85%</span>
+                        </div>
 
-                    <div class="barre">
-                        <div class="progress css"></div>
+                        <div class="h-2 bg-white/30 rounded-full">
+                            <div class="h-2 bg-white rounded-full w-[85%]"></div>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="competence">
-                    <p>Git & GitHub</p>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Git & GitHub</span>
+                            <span>75%</span>
+                        </div>
 
-                    <div class="barre">
-                        <div class="progress git"></div>
+                        <div class="h-2 bg-white/30 rounded-full">
+                            <div class="h-2 bg-white rounded-full w-[75%]"></div>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="competence">
-                    <p>Linux</p>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Linux</span>
+                            <span>70%</span>
+                        </div>
 
-                    <div class="barre">
-                        <div class="progress linux"></div>
+                        <div class="h-2 bg-white/30 rounded-full">
+                            <div class="h-2 bg-white rounded-full w-[70%]"></div>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
 
             <!-- LANGUES -->
-            <div class="bloc">
+            <div class="mb-8">
 
-                <h2>LANGUES</h2>
+                <h2 class="text-lg font-bold border-b border-white/40 pb-2 mb-4">
+                    LANGUES
+                </h2>
 
-                <p>Français</p>
-                <p>Anglais</p>
-                <p>Arabe</p>
+                <div class="space-y-2 text-sm">
+                    <p>Français</p>
+                    <p>Anglais</p>
+                    <p>Arabe</p>
+                </div>
 
             </div>
 
 
-            <!-- INTÉRÊTS -->
-            <div class="bloc">
+            <!-- INTERETS -->
+            <div>
 
-                <h2>INTÉRÊTS</h2>
+                <h2 class="text-lg font-bold border-b border-white/40 pb-2 mb-4">
+                    INTERETS
+                </h2>
 
-                <p>💻 Informatique</p>
-                <p>📚 Lecture</p>
-                <p>🌐 Technologie</p>
+                <div class="space-y-2 text-sm">
+                    <p>💻 Informatique</p>
+                    <p>📚 Lecture</p>
+                    <p>🌐 Technologie</p>
+                </div>
 
             </div>
 
         </aside>
 
 
-        <!--  COLONNE DROITE  -->
+        <!-- COLONNE DROITE -->
+        <main class="md:w-[68%] p-7 md:p-10 text-gray-700">
 
-        <main class="content">
+            <!-- EN-TETE -->
+            <header class="mb-8">
 
-            <!-- NOM -->
-            <header>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-[#123f63] tracking-wide">
+                    MAMADOU SIRADJO BALDE
+                </h1>
 
-                <h2>MAMADOU SIRADJO BALDE</h2>
+                <h2 class="text-lg font-semibold text-gray-500 mt-2">
+                    ETUDIANT EN INFORMATIQUE
+                </h2>
 
-                <h3>ÉTUDIANT EN INFORMATIQUE</h3>
+                <div class="w-20 h-1 bg-[#123f63] mt-4 rounded-full"></div>
 
             </header>
 
 
             <!-- PROFIL -->
-            <section>
+            <section class="mb-8">
 
-                <h2>PROFIL</h2>
+                <div class="flex items-center gap-3 mb-4">
+    <h2 class="text-xl font-bold text-[#123f63]">
+        PROFIL
+    </h2>
 
-                <p>
-                    Étudiant en informatique passionné par le développement
+    <div class="h-[2px] flex-1 bg-[#123f63]"></div>
+</div>
+
+                <p class="text-sm leading-7 text-gray-600">
+                    Etudiant en informatique passionné par le développement
                     web et les nouvelles technologies. Sérieux, motivé et
                     curieux, je souhaite développer mes compétences dans
                     le domaine informatique et participer à des projets
@@ -137,32 +214,46 @@
 
 
             <!-- FORMATION -->
-            <section>
+            <section class="mb-8">
 
-                <h2>FORMATION</h2>
+                <h2 class="text-xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-5">
+                    FORMATION
+                </h2>
 
-                <div class="item">
+                <div class="border-l-4 border-[#123f63] pl-5 mb-6">
 
-                    <h1>BT3 Génie  Informatique</h1>
-                    <h3>Université : Mahatma Gandhi</h3>
-                    <span>2024 - 2026</span>
+                    <h3 class="font-bold text-gray-800 text-lg">
+                        BT3 Génie Informatique
+                    </h3>
 
-                    <p>
-                        Formation universitaire en informatique.
-                        Développement web, programmation, bases de données,
-                        réseaux et systèmes informatiques.
+                    <p class="text-sm font-semibold text-[#123f63] mt-1">
+                        Université Mahatma Gandhi
+                    </p>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                        2024 - 2026
+                    </p>
+
+                    <p class="text-sm text-gray-600 leading-6 mt-3">
+                        Formation en informatique, développement web,
+                        programmation, bases de données, réseaux et
+                        systèmes informatiques.
                     </p>
 
                 </div>
 
 
-                <div class="item">
+                <div class="border-l-4 border-gray-300 pl-5">
 
-                    <h3>Formation secondaire</h3>
+                    <h3 class="font-bold text-gray-800">
+                        Formation secondaire
+                    </h3>
 
-                    <span>2018 - 2024</span>
+                    <p class="text-xs text-gray-500 mt-1">
+                        2018 - 2024
+                    </p>
 
-                    <p>
+                    <p class="text-sm text-gray-600 mt-2">
                         Formation générale et scientifique.
                     </p>
 
@@ -171,31 +262,42 @@
             </section>
 
 
-            <!-- EXPÉRIENCE -->
-            <section>
+            <!-- EXPERIENCE -->
+            <section class="mb-8">
 
-                <h2>EXPERIENCE</h2>
+                <h2 classE"text-xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-5">
+                    EXPERIENCE
+                </h2>
 
-                <div class="item">
+                <div class="border-l-4 border-[#123f63] pl-5 mb-6">
 
-                    <h3>Projet de développement Web</h3>
+                    <h3 class="font-bold text-gray-800">
+                        Projet de développement Web
+                    </h3>
 
-                    <span>2026</span>
+                    <p class="text-xs text-gray-500 mt-1">
+                        2026
+                    </p>
 
-                    <p>
-                        Création d'un CV professionnel avec HTML et CSS.
+                    <p class="text-sm text-gray-600 leading-6 mt-2">
+                        Création d'un CV professionnel avec HTML,
+                        CSS et Tailwind CSS.
                     </p>
 
                 </div>
 
 
-                <div class="item">
+                <div class="border-l-4 border-[#123f63] pl-5">
 
-                    <h3>Projet de gestion scolaire</h3>
+                    <h3 class="font-bold text-gray-800">
+                        Projet de gestion scolaire
+                    </h3>
 
-                    <span>2026</span>
+                    <p class="text-xs text-gray-500 mt-1">
+                        2026
+                    </p>
 
-                    <p>
+                    <p class="text-sm text-gray-600 leading-6 mt-2">
                         Conception d'un projet de gestion scolaire
                         permettant de gérer les étudiants et leurs résultats.
                     </p>
@@ -206,18 +308,25 @@
 
 
             <!-- PROJETS -->
-            <section>
+            <section class="mb-8">
 
-                <h2>PROJETS</h2>
+                <h2 class="text-xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-5">
+                    PROJETS
+                </h2>
 
-                <div class="item">
+                <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-[#123f63]">
 
-                    <h3>Site Web personnel</h3>
+                    <h3 class="font-bold text-gray-800">
+                        Site Web personnel
+                    </h3>
 
-                    <span>2026</span>
+                    <p class="text-xs text-gray-500 mt-1">
+                        2026
+                    </p>
 
-                    <p>
-                        Création d'un site web avec HTML et CSS.
+                    <p class="text-sm text-gray-600 leading-6 mt-2">
+                        Création d'un site web personnel avec HTML,
+                        CSS et Tailwind CSS.
                     </p>
 
                 </div>
@@ -225,16 +334,22 @@
             </section>
 
 
-            <!-- CERTIFICATION -->
+            <!-- CERTIFICATIONS -->
             <section>
 
-                <h2>CERTIFICATIONS</h2>
+                <h2 class="text-xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-5">
+                    CERTIFICATIONS
+                </h2>
 
-                <div class="item">
+                <div class="bg-gray-50 rounded-lg p-5 border-l-4 border-[#123f63]">
 
-                    <h3>Initiation au développement Web</h3>
+                    <h3 class="font-bold text-gray-800">
+                        Initiation au développement Web
+                    </h3>
 
-                    <span>HTML & CSS</span>
+                    <p class="text-sm text-gray-500 mt-1">
+                        HTML & CSS
+                    </p>
 
                 </div>
 
@@ -245,5 +360,4 @@
     </div>
 
 </body>
-
 </html>
