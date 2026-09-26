@@ -1,110 +1,426 @@
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mes projets</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="../css/cv.css">
-    <link rel="stylesheet" href="../css/projets.css">
+    <title>CV - Mamadou Siradjo Baldé</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans p-5 md:p-10">
 
-    <nav class="menu">
-        <a href="index.html">Accueil</a>
-        <a href="projets.html">Projets</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+    <!-- Menu -->
+    <nav class="bg-[#123f63] text-white p-4 mb-6 rounded-lg shadow">
 
-    <main class="projets">
+        <div class="flex justify-center items-center gap-6 flex-wrap">
 
-        <h1>MES PROJETS PROFESSIONNELS</h1>
+            <a href="index.html" class="hover:text-yellow-300 font-medium">
+                Accueil
+            </a>
 
-        <p class="intro">
-            Découvrez mes projets réalisés dans le domaine de
-            l'informatique et du développement web.
-        </p>
+            <a href="pages/projets.html" class="hover:text-yellow-300 font-medium">
+                Projets
+            </a>
 
-        <div class="projets-container">
+            <a href="contact.html" class="hover:text-yellow-300 font-medium">
+                Contact
+            </a>
 
-            <div class="projet">
-                <h2>Projet 1 — CV professionnel</h2>
+            <a href="connexion.html" class="hover:text-yellow-300 font-medium">
+                Connexion
+            </a>
 
-                <p>
-                    Création d'un CV professionnel avec HTML et CSS.
-                    Le projet présente mes compétences, ma formation,
-                    mes expériences et mes informations personnelles.
-                </p>
-
-                <div class="technologies">
-                    HTML &nbsp; | &nbsp; CSS
-                </div>
-            </div>
-
-
-            <div class="projet">
-                <h2>Projet 2 — Gestion scolaire</h2>
-
-                <p>
-                    Conception d'un système de gestion scolaire permettant
-                    de gérer les étudiants, les résultats, les notes
-                    et les informations scolaires.
-                </p>
-
-                <div class="technologies">
-                    Excel &nbsp; | &nbsp; VBA
-                </div>
-            </div>
-
-
-            <div class="projet">
-                <h2>Projet 3 — Site Web</h2>
-
-                <p>
-                    Création d'un site web moderne et responsive
-                    permettant de présenter des informations de manière
-                    claire et professionnelle.
-                </p>
-
-                <div class="technologies">
-                    HTML &nbsp; | &nbsp; CSS &nbsp; | &nbsp; Git
-                </div>
-            </div>
-
-
-            <div class="projet">
-                <h2>Projet 4 — Git & GitHub</h2>
-
-                <p>
-                    Utilisation de Git et GitHub pour enregistrer,
-                    gérer et publier mes projets informatiques
-                    sur Internet.
-                </p>
-
-                <div class="technologies">
-                    Git &nbsp; | &nbsp; GitHub
-                </div>
-            </div>
+            <a href="inscription.html" class="hover:text-yellow-300 font-medium">
+                Inscription
+            </a>
 
         </div>
-        <div class="projet">
-    <h2>Projet 5 — Enseignement informatique</h2>
 
-    <p>
-        Enseignement des notions fondamentales de l'informatique
-        aux débutants, notamment l'utilisation de l'ordinateur,
-        les logiciels de base, la bureautique et les bonnes pratiques
-        numériques.
-    </p>
+    </nav>
 
-    <div class="technologies">
-        Informatique &nbsp; | &nbsp; Bureautique &nbsp; | &nbsp; Formation
+    <!-- CV -->
+    <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden flex flex-col md:flex-row">
+
+        <!-- Partie gauche -->
+        <aside class="md:w-[32%] bg-[#123f63] text-white p-7">
+
+            <!-- Photo -->
+            <div class="flex justify-center mb-6">
+
+                <img
+                    src="../images/MAMADOU SIRADJO BALDE.jpeg"
+                    alt="Photo de Mamadou Siradjo Baldé"
+                    class="w-40 h-40 object-cover rounded-full border-4 border-white shadow-lg"
+                >
+
+            </div>
+
+            <!-- Nom -->
+            <h1 class="text-2xl font-bold text-center mb-2">
+                MAMADOU SIRADJO BALDE
+            </h1>
+
+            <p class="text-center text-blue-200 mb-8">
+                ETUDIANT EN GENIE INFORMATIQUE
+            </p>
+
+            <!-- Contact -->
+            <section class="mb-8">
+
+                <h2 class="text-xl font-bold border-b border-blue-300 pb-2 mb-4">
+                    CONTACT
+                </h2>
+
+                <!-- Téléphone -->
+                <div class="flex items-center gap-3 mb-4">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-6 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a2 2 0 011.94 1.515l.58 2.32a2 2 0 01-.45 1.86l-1.27 1.27a16.02 16.02 0 006.06 6.06l1.27-1.27a2 2 0 011.86-.45l2.32.58A2 2 0 0121 16.72V20a2 2 0 01-2 2h-1C9.716 22 2 14.284 2 5V5a2 2 0 012-2z"
+                        />
+                    </svg>
+
+                    <span>
+                        +224 624 18 55 47
+                    </span>
+
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-center gap-3 mb-4">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-6 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                    </svg>
+
+                    <span class="break-all">
+                        mamadousiradjob49@gmail.com
+                    </span>
+
+                </div>
+
+                <!-- Localisation -->
+                <div class="flex items-center gap-3">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-6 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 11a3 3 0 100-6 3 3 0 000 6z"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1114 0z"
+                        />
+                    </svg>
+
+                    <span>
+                        Conakry, Guinée
+                    </span>
+
+                </div>
+
+            </section>
+
+            <!-- Compétences -->
+            <section class="mb-8">
+
+                <h2 class="text-xl font-bold border-b border-blue-300 pb-2 mb-4">
+                    COMPETENCES
+                </h2>
+
+                <ul class="space-y-2">
+                    <li>HTML / CSS</li>
+                    <li>Tailwind CSS</li>
+                    <li>MySQL</li>
+                    <li>C#</li>
+                    <li>Microsoft Excel</li>
+                    <li>Linux</li>
+                    <li>Git / GitHub</li>
+                </ul>
+
+            </section>
+
+            <!-- Langues -->
+            <section class="mb-8">
+
+                <h2 class="text-xl font-bold border-b border-blue-300 pb-2 mb-4">
+                    LANGUES
+                </h2>
+
+                <ul class="space-y-2">
+                    <li>Français</li>
+                    <li>Arabe</li>
+                    <li>Anglais - Notions</li>
+                </ul>
+
+            </section>
+
+            <!-- Intérêts -->
+            <section>
+
+                <h2 class="text-xl font-bold border-b border-blue-300 pb-2 mb-4">
+                    INTERETS
+                </h2>
+
+                <ul class="space-y-3">
+
+                    <li class="flex items-center gap-3">
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="14"
+                                rx="2"
+                                stroke-width="2"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-width="2"
+                                d="M8 20h8"
+                            />
+                        </svg>
+
+                        Informatique
+
+                    </li>
+
+                    <li class="flex items-center gap-3">
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 19.5A2.5 2.5 0 016.5 17H20"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"
+                            />
+                        </svg>
+
+                        Lecture
+
+                    </li>
+
+                    <li class="flex items-center gap-3">
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                                stroke-width="2"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-width="2"
+                                d="M12 7v5l3 2"
+                            />
+                        </svg>
+
+                        Apprentissage
+
+                    </li>
+
+                </ul>
+
+            </section>
+
+        </aside>
+
+        <!-- Partie droite -->
+        <main class="md:w-[68%] p-7 md:p-10 text-gray-700">
+
+            <!-- Profil -->
+            <section class="mb-8">
+
+                <h2 class="text-2xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-4">
+                    PROFIL
+                </h2>
+
+                <p class="leading-7">
+                    Etudiant en génie informatique, motivé et passionné par
+                    les technologies numériques. Je développe progressivement
+                    mes compétences en programmation, développement web,
+                    bases de données et outils informatiques.
+                </p>
+
+            </section>
+
+            <!-- Formation -->
+            <section class="mb-8">
+
+                <h2 class="text-2xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-4">
+                    FORMATION
+                </h2>
+
+                <div class="mb-5">
+
+                    <h3 class="text-lg font-bold">
+                        Génie Informatique
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Formation en informatique
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- Expérience -->
+            <section class="mb-8">
+
+                <h2 class="text-2xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-4">
+                    EXPERIENCE
+                </h2>
+
+                <div class="mb-5">
+
+                    <h3 class="text-lg font-bold">
+                        Développement informatique
+                    </h3>
+
+                    <p class="leading-7">
+                        Réalisation de projets pratiques en HTML, CSS,
+                        Tailwind CSS, Git, GitHub et bases de données.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- Projets -->
+            <section class="mb-8">
+
+                <h2 class="text-2xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-4">
+                    PROJETS
+                </h2>
+
+                <div class="space-y-4">
+
+                    <div class="bg-gray-100 p-4 rounded-lg">
+
+                        <h3 class="font-bold text-lg">
+                            CV professionnel en HTML / CSS / Tailwind
+                        </h3>
+
+                        <p class="mt-2">
+                            Création d'un CV professionnel responsive
+                            avec HTML et Tailwind CSS.
+                        </p>
+
+                    </div>
+
+                    <div class="bg-gray-100 p-4 rounded-lg">
+
+                        <h3 class="font-bold text-lg">
+                            Gestion d'une école
+                        </h3>
+
+                        <p class="mt-2">
+                            Projet de gestion scolaire réalisé avec
+                            Microsoft Excel.
+                        </p>
+
+                    </div>
+
+                    <div class="bg-gray-100 p-4 rounded-lg">
+
+                        <h3 class="font-bold text-lg">
+                            J'enseigne informatique de base
+                        </h3>
+
+                        <p class="mt-2">
+                            Projet destiné à l'apprentissage des notions
+                            fondamentales de l'informatique.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Certifications -->
+            <section>
+
+                <h2 class="text-2xl font-bold text-[#123f63] border-b-2 border-[#123f63] pb-2 mb-4">
+                    CERTIFICATIONS
+                </h2>
+
+                <p>
+                    Formations et apprentissages en informatique,
+                    développement web et outils numériques.
+                </p>
+
+            </section>
+
+        </main>
+
     </div>
-</div>
-
-    </main>
 
 </body>
+
 </html>
