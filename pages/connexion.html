@@ -14,39 +14,40 @@
 <body class="bg-gray-100 min-h-screen">
 
     <!-- Menu -->
-    <nav class="bg-[#123f63] text-white p-4 mb-8 shadow">
-        <div class="flex justify-center items-center gap-6 flex-wrap">
+    <nav class="max-w-6xl mx-auto bg-[#123f63] text-white rounded-lg shadow-lg mb-8">
 
-            <a href="index.html"
-               class="hover:text-yellow-300 font-medium">
+        <div class="flex justify-center items-center flex-wrap gap-2 p-3">
+
+            <a href="../index.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
                 Accueil
             </a>
 
-            <a href="pages/projets.html"
-               class="hover:text-yellow-300 font-medium">
+            <a href="projets.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
                 Projets
             </a>
 
             <a href="contact.html"
-               class="hover:text-yellow-300 font-medium">
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
                 Contact
             </a>
 
             <a href="connexion.html"
-               class="text-yellow-300 font-bold">
+               class="px-5 py-3 rounded-md font-medium bg-white text-[#123f63]">
                 Connexion
             </a>
 
             <a href="inscription.html"
-               class="hover:text-yellow-300 font-medium">
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
                 Inscription
             </a>
 
         </div>
+
     </nav>
 
-
-    <!-- Formulaire de connexion -->
+    <!-- Formulaire -->
     <main class="flex justify-center px-4 py-8">
 
         <div class="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
@@ -64,8 +65,9 @@
                 <!-- Email -->
                 <div class="mb-5">
 
-                    <label for="email"
-                           class="block text-gray-700 font-medium mb-2">
+                    <label
+                        for="email"
+                        class="block text-gray-700 font-medium mb-2">
                         Adresse e-mail
                     </label>
 
@@ -80,12 +82,12 @@
 
                 </div>
 
-
                 <!-- Mot de passe -->
                 <div class="mb-6">
 
-                    <label for="password"
-                           class="block text-gray-700 font-medium mb-2">
+                    <label
+                        for="password"
+                        class="block text-gray-700 font-medium mb-2">
                         Mot de passe
                     </label>
 
@@ -100,7 +102,6 @@
 
                 </div>
 
-
                 <!-- Bouton -->
                 <button
                     type="submit"
@@ -110,15 +111,17 @@
 
             </form>
 
-
-            <!-- Lien inscription -->
+            <!-- Inscription -->
             <p class="text-center text-gray-600 mt-6">
+
                 Vous n'avez pas encore de compte ?
 
-                <a href="inscription.html"
-                   class="text-[#123f63] font-semibold hover:underline">
+                <a
+                    href="inscription.html"
+                    class="text-[#123f63] font-semibold hover:underline">
                     Créer un compte
                 </a>
+
             </p>
 
         </div>

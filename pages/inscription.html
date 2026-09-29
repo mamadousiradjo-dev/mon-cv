@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inscription - Mamadou Siradjo Baldé</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Menu -->
+    <nav class="max-w-6xl mx-auto bg-[#123f63] text-white rounded-lg shadow-lg mb-8">
+
+        <div class="flex justify-center items-center flex-wrap gap-2 p-3">
+
+            <a href="../index.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+                Accueil
+            </a>
+
+            <a href="projets.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+                Projets
+            </a>
+
+            <a href="contact.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+                Contact
+            </a>
+
+            <a href="connexion.html"
+               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+                Connexion
+            </a>
+
+            <a href="inscription.html"
+               class="px-5 py-3 rounded-md font-medium bg-white text-[#123f63]">
+                Inscription
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- Formulaire -->
+    <main class="flex justify-center px-4 py-8">
+
+        <div class="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
+
+            <h1 class="text-3xl font-bold text-center text-[#123f63] mb-2">
+                INSCRIPTION
+            </h1>
+
+            <p class="text-center text-gray-500 mb-8">
+                Créez votre compte
+            </p>
+
+            <form>
+
+                <!-- Nom -->
+                <div class="mb-5">
+
+                    <label
+                        for="nom"
+                        class="block text-gray-700 font-medium mb-2">
+                        Nom complet
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nom"
+                        name="nom"
+                        placeholder="Entrez votre nom complet"
+                        required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
+                    >
+
+                </div>
+
+                <!-- Email -->
+                <div class="mb-5">
+
+                    <label
+                        for="email"
+                        class="block text-gray-700 font-medium mb-2">
+                        Adresse e-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Entrez votre adresse e-mail"
+                        required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
+                    >
+
+                </div>
+
+                <!-- Mot de passe -->
+                <div class="mb-5">
+
+                    <label
+                        for="password"
+                        class="block text-gray-700 font-medium mb-2">
+                        Mot de passe
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Créez un mot de passe"
+                        required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
+                    >
+
+                </div>
+
+                <!-- Confirmation -->
+                <div class="mb-6">
+
+                    <label
+                        for="confirmation"
+                        class="block text-gray-700 font-medium mb-2">
+                        Confirmer le mot de passe
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmation"
+                        name="confirmation"
+                        placeholder="Confirmez votre mot de passe"
+                        required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
+                    >
+
+                </div>
+
+                <!-- Bouton -->
+                <button
+                    type="submit"
+                    class="w-full bg-[#123f63] text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+                    Créer mon compte
+                </button>
+
+            </form>
+
+            <!-- Connexion -->
+            <p class="text-center text-gray-600 mt-6">
+
+                Vous avez déjà un compte ?
+
+                <a
+                    href="connexion.html"
+                    class="text-[#123f63] font-semibold hover:underline">
+                    Se connecter
+                </a>
+
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
