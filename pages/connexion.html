@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,83 +10,87 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen">
+<body class="min-h-screen bg-gray-100 font-sans">
 
-    <!-- Menu -->
-    <nav class="max-w-6xl mx-auto bg-[#123f63] text-white rounded-lg shadow-lg mb-8">
-
-        <div class="flex justify-center items-center flex-wrap gap-2 p-3">
+    <!-- MENU -->
+    <nav class="max-w-[1000px] mx-auto mt-5 bg-[#123f63] rounded-xl px-6 py-4">
+        <div class="flex flex-wrap justify-center gap-6">
 
             <a href="../index.html"
-               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+               class="text-white font-semibold hover:text-blue-200 transition">
                 Accueil
             </a>
 
             <a href="projets.html"
-               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+               class="text-white font-semibold hover:text-blue-200 transition">
                 Projets
             </a>
 
             <a href="contact.html"
-               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+               class="text-white font-semibold hover:text-blue-200 transition">
                 Contact
             </a>
 
             <a href="connexion.html"
-               class="px-5 py-3 rounded-md font-medium bg-white text-[#123f63]">
+               class="text-white font-semibold hover:text-blue-200 transition">
                 Connexion
             </a>
 
             <a href="inscription.html"
-               class="px-5 py-3 rounded-md font-medium hover:bg-white hover:text-[#123f63] transition">
+               class="text-white font-semibold hover:text-blue-200 transition">
                 Inscription
             </a>
 
         </div>
-
     </nav>
 
-    <!-- Formulaire -->
-    <main class="flex justify-center px-4 py-8">
 
-        <div class="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
+    <!-- CONTENU -->
+    <main class="max-w-[500px] mx-auto px-5 py-12">
 
-            <h1 class="text-3xl font-bold text-center text-[#123f63] mb-2">
-                CONNEXION
-            </h1>
+        <div class="bg-white rounded-2xl shadow-lg p-8">
 
-            <p class="text-center text-gray-500 mb-8">
-                Connectez-vous à votre compte
-            </p>
+            <!-- TITRE -->
+            <div class="text-center mb-8">
 
-            <form>
+                <h1 class="text-3xl font-bold text-[#123f63]">
+                    Connexion
+                </h1>
 
-                <!-- Email -->
-                <div class="mb-5">
+                <p class="text-gray-500 mt-2">
+                    Connectez-vous à votre compte.
+                </p>
 
-                    <label
-                        for="email"
-                        class="block text-gray-700 font-medium mb-2">
-                        Adresse e-mail
+            </div>
+
+
+            <!-- FORMULAIRE -->
+            <form action="../backend/connexion.php"
+                  method="POST"
+                  class="space-y-5">
+
+                <!-- EMAIL -->
+                <div>
+                    <label for="email"
+                           class="block text-sm font-semibold text-gray-700 mb-2">
+                        Adresse email
                     </label>
 
                     <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Entrez votre adresse e-mail"
+                        placeholder="exemple@gmail.com"
                         required
-                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
-                    >
-
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
-                <!-- Mot de passe -->
-                <div class="mb-6">
 
-                    <label
-                        for="password"
-                        class="block text-gray-700 font-medium mb-2">
+                <!-- MOT DE PASSE -->
+                <div>
+                    <label for="password"
+                           class="block text-sm font-semibold text-gray-700 mb-2">
                         Mot de passe
                     </label>
 
@@ -97,28 +100,30 @@
                         name="password"
                         placeholder="Entrez votre mot de passe"
                         required
-                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#123f63]"
-                    >
-
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
-                <!-- Bouton -->
+
+                <!-- BOUTON -->
                 <button
                     type="submit"
-                    class="w-full bg-[#123f63] text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+                    class="w-full bg-[#123f63] text-white font-semibold
+                           py-3 rounded-lg hover:bg-[#0d2f4a]
+                           transition duration-300">
                     Se connecter
                 </button>
 
             </form>
 
-            <!-- Inscription -->
+
+            <!-- LIEN INSCRIPTION -->
             <p class="text-center text-gray-600 mt-6">
 
                 Vous n'avez pas encore de compte ?
 
-                <a
-                    href="inscription.html"
-                    class="text-[#123f63] font-semibold hover:underline">
+                <a href="inscription.html"
+                   class="text-blue-600 font-semibold hover:underline">
                     Créer un compte
                 </a>
 
@@ -129,5 +134,4 @@
     </main>
 
 </body>
-
 </html>
