@@ -1,31 +1,53 @@
 <?php
 // backend/setup.php
-
-$host = "localhost";
-$username = "root";
-$password = "Mysql7474@"; // Inscrivez votre mot de passe exact ici
+require_once 'db.php';
 
 try {
-    $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $username, $password, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
-
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS mon_cv CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;");
-    $pdo->exec("USE mon_cv;");
-
-    $sql = "CREATE TABLE IF NOT EXISTS utilisateurs (
+    // 1. Table Utilisateurs
+    $pdo->exec("CREATE TABLE IF NOT EXISTS utilisateurs (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nom VARCHAR(100) NOT NULL,
-        email VARCHAR(150) NOT NULL UNIQUE,
+        email VARCHAR(100) NOT NULL UNIQUE,
         mot_de_passe VARCHAR(255) NOT NULL,
-        date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+        cree_le TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-    $pdo->exec($sql);
+    // 2. Table Expériences
+    $pdo->exec("CREATE TABLE IF NOT EXISTS experiences (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titre VARCHAR(255) NOT NULL,
+        entreprise VARCHAR(255) NOT NULL,
+        periode VARCHAR(100) NOT NULL,
+        description TEXT
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-    echo "<h1 style='color: green; text-align: center; font-family: sans-serif; margin-top: 50px;'>✅ BASE DE DONNÉES ET TABLE CRÉÉES AVEC SUCCÈS !</h1>";
+    // 3. Table Formations / Diplômes
+    $pdo->exec("CREATE TABLE IF NOT EXISTS formations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        diplome VARCHAR(255) NOT NULL,
+        etablissement VARCHAR(255) NOT NULL,
+        annee VARCHAR(50) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    // Insertion d'expériences de test si la table est vide
+    $checkExp = $pdo->query("SELECT COUNT(*) FROM experiences")->fetchColumn();
+    if ($checkExp == 0) {
+        $pdo->exec("INSERT INTO experiences (titre, entreprise, periode, description) VALUES
+        ('Développeur Web Débutant', 'Projet Personnel', '2026', 'Création d\'un site CV dynamique avec PHP, MySQL et Tailwind CSS.'),
+        ('Stagiaire Informatique', 'Entreprise Tech', '2025 - 2026', 'Maintenance informatique et assistance technique.')");
+    }
+
+    // Insertion de formations de test si la table est vide
+    $checkForm = $pdo->query("SELECT COUNT(*) FROM formations")->fetchColumn();
+    if ($checkForm == 0) {
+        $pdo->exec("INSERT INTO formations (diplome, etablissement, annee) VALUES
+        ('Licence / BTS en Informatique', 'Université / École', '2024 - 2026'),
+        ('Baccalauréat Scientifique', 'Lycée', '2024')");
+    }
+
+    echo "<h2>✅ Base de données installée avec succès avec les tables du CV !</h2>";
 
 } catch (PDOException $e) {
-    echo "<h2 style='color: red; font-family: sans-serif;'>❌ Erreur SQL : " . $e->getMessage() . "</h2>";
+    echo "Erreur lors de la configuration : " . $e->getMessage();
 }
 ?>
