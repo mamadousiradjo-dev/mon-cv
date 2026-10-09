@@ -1,46 +1,38 @@
 <?php
 // backend/connexion.php
+session_start();
+require_once 'db.php';
 
-session_start([
-    'cookie_httponly' => true,
-    'cookie_samesite' => 'Lax',
-    'use_strict_mode' => true,
-]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $mot_de_passe = $_POST['mot_de_passe'] ?? '';
 
-require_once __DIR__ . '/db.php';
+    if (empty($email) || empty($mot_de_passe)) {
+        die("Veuillez remplir tous les champs.");
+    }
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../pages/connexion.html");
-    exit();
-}
+    try {
+        // 1. Requête préparée pour récupérer l'utilisateur par son email
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch();
 
-$email = trim($_POST["email"] ?? "");
-$mot_de_passe = $_POST["password"] ?? "";
+        // 2. Vérification de l'existence de l'utilisateur et du mot de passe
+        if ($user && password_verify($mot_de_passe, $user['mot_de_passe'])) {
+            // Création de la session utilisateur
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_nom'] = $user['nom'];
+            $_SESSION['user_email'] = $user['email'];
 
-if (empty($email) || empty($mot_de_passe)) {
-    die("Veuillez remplir tous les champs.");
-}
+            echo "<h2>🎉 Connexion réussie ! Bienvenue " . htmlspecialchars($user['nom']) . "</h2>";
+            echo "<p><a href='voir_utilisateurs.php'>Voir la liste des utilisateurs</a></p>";
+        } else {
+            echo "<h2>❌ Email ou mot de passe incorrect.</h2>";
+            echo "<p><a href='../pages/connexion.html'>Réessayer</a></p>";
+        }
 
-// Recherche de l'utilisateur dans la base SQLite
-$sql = "SELECT id, nom, email, mot_de_passe FROM utilisateurs WHERE email = :email";
-$stmt = $pdo->prepare($sql);
-$stmt->execute(["email" => $email]);
-$utilisateur = $stmt->fetch();
-
-// Vérification du mot de passe
-if ($utilisateur && password_verify($mot_de_passe, $utilisateur["mot_de_passe"])) {
-    
-    session_regenerate_id(true);
-
-    $_SESSION["user_id"] = $utilisateur["id"];
-    $_SESSION["nom"] = $utilisateur["nom"];
-    $_SESSION["email"] = $utilisateur["email"];
-
-    // Redirection vers la page d'accueil
-    header("Location: ../index.html");
-    exit();
-
-} else {
-    die("Email ou mot de passe incorrect.");
+    } catch (PDOException $e) {
+        echo "Erreur de connexion : " . $e->getMessage();
+    }
 }
 ?>

@@ -1,73 +1,41 @@
 <?php
 // backend/inscription.php
+require_once 'db.php';
 
-// Démarrer la session
-session_start([
-    'cookie_httponly' => true,
-    'cookie_samesite' => 'Lax',
-    'use_strict_mode' => true,
-]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom = trim($_POST['nom'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $mot_de_passe = $_POST['mot_de_passe'] ?? '';
 
-// Inclure la connexion à la base de données
-require_once __DIR__ . '/db.php';
+    if (empty($nom) || empty($email) || empty($mot_de_passe)) {
+        die("Veuillez remplir tous les champs.");
+    }
 
-// Vérifier que le formulaire a bien été envoyé en POST
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../pages/inscription.html");
-    exit();
-}
+    try {
+        // 1. Requête préparée pour vérifier si l'email existe déjà
+        $stmt_check = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = :email");
+        $stmt_check->execute(['email' => $email]);
 
-// Récupérer et nettoyer les données du formulaire
-$nom = trim(strip_tags($_POST["nom"] ?? ""));
-$email = trim($_POST["email"] ?? "");
-$mot_de_passe = $_POST["password"] ?? "";
-$confirmation = $_POST["confirmation"] ?? "";
+        if ($stmt_check->fetch()) {
+            die("Cet email est déjà utilisé par un autre compte.");
+        }
 
-// 1. Vérifier que tous les champs sont remplis
-if (empty($nom) || empty($email) || empty($mot_de_passe) || empty($confirmation)) {
-    die("Veuillez remplir tous les champs.");
-}
+        // 2. Hachage sécurisé du mot de passe
+        $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
-// 2. Vérifier le format de l'adresse email
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("Adresse email invalide.");
-}
+        // 3. Requête préparée pour insérer le nouvel utilisateur
+        $stmt_insert = $pdo->prepare("INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (:nom, :email, :mot_de_passe)");
+        $stmt_insert->execute([
+            'nom' => $nom,
+            'email' => $email,
+            'mot_de_passe' => $hash
+        ]);
 
-// 3. Vérifier que les mots de passe correspondent
-if ($mot_de_passe !== $confirmation) {
-    die("Les mots de passe ne correspondent pas.");
-}
+        echo "<h2>✅ Inscription réussie !</h2>";
+        echo "<p><a href='../pages/connexion.html'>Cliquer ici pour vous connecter</a></p>";
 
-// 4. Vérifier la longueur minimale du mot de passe
-if (mb_strlen($mot_de_passe) < 6) {
-    die("Le mot de passe doit contenir au moins 6 caractères.");
-}
-
-// 5. Vérifier si l'adresse email existe déjà dans la base
-$sql = "SELECT id FROM utilisateurs WHERE email = :email";
-$stmt = $pdo->prepare($sql);
-$stmt->execute(["email" => $email]);
-
-if ($stmt->fetch()) {
-    die("Cette adresse email est déjà utilisée.");
-}
-
-// 6. Hacher le mot de passe de manière sécurisée
-$mot_de_passe_hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-
-// 7. Insérer le nouvel utilisateur dans la base de données
-$sql = "INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (:nom, :email, :mot_de_passe)";
-$stmt = $pdo->prepare($sql);
-
-if ($stmt->execute([
-    "nom" => $nom,
-    "email" => $email,
-    "mot_de_passe" => $mot_de_passe_hash
-])) {
-    // Redirection vers la page de connexion après inscription réussie
-    header("Location: ../pages/connexion.html?inscription=succes");
-    exit();
-} else {
-    die("Une erreur est survenue lors de l'inscription.");
+    } catch (PDOException $e) {
+        echo "Erreur lors de l'inscription : " . $e->getMessage();
+    }
 }
 ?>
