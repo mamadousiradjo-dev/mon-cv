@@ -3,16 +3,7 @@
 require_once 'db.php';
 
 try {
-    // 1. Table Utilisateurs
-    $pdo->exec("CREATE TABLE IF NOT EXISTS utilisateurs (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        mot_de_passe VARCHAR(255) NOT NULL,
-        cree_le TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-
-    // 2. Table Expériences
+    // Re-création des tables
     $pdo->exec("CREATE TABLE IF NOT EXISTS experiences (
         id INT AUTO_INCREMENT PRIMARY KEY,
         titre VARCHAR(255) NOT NULL,
@@ -21,7 +12,6 @@ try {
         description TEXT
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-    // 3. Table Formations / Diplômes
     $pdo->exec("CREATE TABLE IF NOT EXISTS formations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         diplome VARCHAR(255) NOT NULL,
@@ -29,25 +19,21 @@ try {
         annee VARCHAR(50) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-    // Insertion d'expériences de test si la table est vide
-    $checkExp = $pdo->query("SELECT COUNT(*) FROM experiences")->fetchColumn();
-    if ($checkExp == 0) {
-        $pdo->exec("INSERT INTO experiences (titre, entreprise, periode, description) VALUES
-        ('Développeur Web Débutant', 'Projet Personnel', '2026', 'Création d\'un site CV dynamique avec PHP, MySQL et Tailwind CSS.'),
-        ('Stagiaire Informatique', 'Entreprise Tech', '2025 - 2026', 'Maintenance informatique et assistance technique.')");
-    }
+    // Vider les anciennes données
+    $pdo->exec("TRUNCATE TABLE experiences");
+    $pdo->exec("TRUNCATE TABLE formations");
 
-    // Insertion de formations de test si la table est vide
-    $checkForm = $pdo->query("SELECT COUNT(*) FROM formations")->fetchColumn();
-    if ($checkForm == 0) {
-        $pdo->exec("INSERT INTO formations (diplome, etablissement, annee) VALUES
-        ('Licence / BTS en Informatique', 'Université / École', '2024 - 2026'),
-        ('Baccalauréat Scientifique', 'Lycée', '2024')");
-    }
+    // Insertion formation sans accent sur E
+    $pdo->exec("INSERT INTO formations (diplome, etablissement, annee) VALUES
+    ('Brevet Technique 3 (BT3) - Génie Informatique', 'Université Mahatma Gandhi', 'En cours (3ème année)')");
 
-    echo "<h2>✅ Base de données installée avec succès avec les tables du CV !</h2>";
+    // Insertion expérience sans accent sur E
+    $pdo->exec("INSERT INTO experiences (titre, entreprise, periode, description) VALUES
+    ('Projet Web : Portfolio CV Dynamique', 'Projet Académique / Personnel', '2026', 'Conception et développement d\'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS et mise en place d\'un système d\'authentification sécurisé.')");
+
+    echo "<h2>✅ Base de données nettoyée et mise à jour sans accents sur E !</h2>";
 
 } catch (PDOException $e) {
-    echo "Erreur lors de la configuration : " . $e->getMessage();
+    echo "Erreur : " . $e->getMessage();
 }
 ?>
