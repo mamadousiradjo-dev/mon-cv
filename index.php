@@ -3,6 +3,11 @@
 require_once 'backend/db.php';
 
 try {
+    // Récupération de la photo de profil depuis MySQL
+    $stmtProfile = $pdo->query("SELECT profile_photo_path FROM user_profile LIMIT 1");
+    $profile = $stmtProfile->fetch(PDO::FETCH_ASSOC);
+    $photoPath = $profile['profile_photo_path'] ?? 'images/MAMADOU SIRADJO BALDE.jpeg';
+
     // Récupération des expériences depuis MySQL
     $stmtExp = $pdo->query("SELECT * FROM experiences ORDER BY id DESC");
     $experiences = $stmtExp->fetchAll(PDO::FETCH_ASSOC);
@@ -51,14 +56,8 @@ try {
 
     <div class="max-w-5xl mx-auto space-y-6">
         
-        <!-- Barre de Navigation Bleu Marine -->
-        <nav class="bg-navy-900 text-white rounded-xl shadow-lg p-4 flex justify-center items-center space-x-8 text-sm font-medium tracking-wide">
-            <a href="index.php" class="px-4 py-2 bg-white text-navy-900 rounded-lg font-bold shadow-sm transition">Accueil</a>
-            <a href="pages/projets.html" class="hover:text-sky-300 transition">Projets</a>
-            <a href="pages/contact.html" class="hover:text-sky-300 transition">Contact</a>
-            <a href="pages/connexion.html" class="hover:text-sky-300 transition">Connexion</a>
-            <a href="pages/inscription.html" class="hover:text-sky-300 transition">Inscription</a>
-        </nav>
+        <!-- Inclusion du composant de navigation (Issue #2) -->
+        <?php include 'navigation.php'; ?>
 
         <!-- Contenu Principal sur 2 colonnes -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[780px]">
@@ -66,12 +65,19 @@ try {
             <!-- Colonne de Gauche : Bleu Marine -->
             <aside class="w-full md:w-2/5 bg-navy-900 text-white p-8 flex flex-col items-center text-center space-y-6">
                 
-                <!-- Photo de Profil -->
-                <div class="pt-2">
-                    <img src="images/MAMADOU SIRADJO BALDE.jpeg" alt="Mamadou Siradjo Balde" class="w-36 h-36 rounded-full border-4 border-white/90 object-cover shadow-xl mx-auto">
+                <!-- Photo de Profil Dynamique avec bouton d'upload (Issue #1) -->
+                <div class="pt-2 relative group">
+                    <img id="profileImage" src="<?= htmlspecialchars($photoPath) ?>" alt="Mamadou Siradjo Balde" class="w-36 h-36 rounded-full border-4 border-white/90 object-cover shadow-xl mx-auto">
+                    
+                    <form id="uploadForm" class="mt-3">
+                        <label for="photoInput" class="cursor-pointer bg-sky-600 hover:bg-sky-500 text-white text-xs py-1.5 px-3 rounded-md transition inline-flex items-center gap-2 shadow">
+                            <i class="fas fa-camera"></i> Changer la photo
+                        </label>
+                        <input type="file" id="photoInput" name="profile_photo" accept="image/jpeg,image/png,image/gif" class="hidden" onchange="uploadPhoto()">
+                    </form>
                 </div>
 
-                <!-- Identité (Sans accent sur BALDE) -->
+                <!-- Identité -->
                 <div>
                     <h1 class="text-xl font-bold uppercase tracking-wider leading-snug">Mamadou Siradjo</h1>
                     <h1 class="text-xl font-bold uppercase tracking-wider leading-snug">Balde</h1>
@@ -118,7 +124,7 @@ try {
                     </p>
                 </section>
 
-                <!-- Section Formation -->
+                <!-- Section Formation (Dynamique MySQL) -->
                 <section>
                     <h2 class="text-sm font-bold text-navy-900 uppercase tracking-wider border-b-2 border-navy-900 pb-2 mb-3">Formation</h2>
                     <div class="space-y-4">
@@ -138,7 +144,7 @@ try {
                     </div>
                 </section>
 
-                <!-- Section Experience -->
+                <!-- Section Experience (Dynamique MySQL) -->
                 <section>
                     <h2 class="text-sm font-bold text-navy-900 uppercase tracking-wider border-b-2 border-navy-900 pb-2 mb-3">Experience</h2>
                     <div class="space-y-5">
@@ -169,5 +175,33 @@ try {
 
     </div>
 
+    <!-- Script JavaScript pour l'upload AJAX -->
+    <script>
+    function uploadPhoto() {
+        const input = document.getElementById('photoInput');
+        if (!input.files || !input.files[0]) return;
+
+        const formData = new FormData();
+        formData.append('profile_photo', input.files[0]);
+
+        fetch('backend/upload_profile.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('profileImage').src = data.photo_url + '?t=' + new Date().getTime();
+                alert(data.message);
+            } else {
+                alert('Erreur : ' + data.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Erreur lors de l\'envoi du fichier.');
+        });
+    }
+    </script>
 </body>
 </html>
