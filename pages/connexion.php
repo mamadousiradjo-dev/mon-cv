@@ -36,7 +36,7 @@
                 Connexion
             </a>
 
-            <a href="inscription.html"
+            <a href="inscription.php"
                class="text-white font-semibold hover:text-blue-200 transition">
                 Inscription
             </a>
@@ -122,7 +122,7 @@
 
                 Vous n'avez pas encore de compte ?
 
-                <a href="inscription.html"
+                <a href="inscription.php"
                    class="text-blue-600 font-semibold hover:underline">
                     Créer un compte
                 </a>
