@@ -1,41 +1,23 @@
-<?php
-// backend/inscription.php
-require_once 'db.php';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4">
+    <div class="max-w-5xl mx-auto space-y-6">
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['nom'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $mot_de_passe = $_POST['mot_de_passe'] ?? '';
+        <!-- Inclusion du menu de navigation -->
+        <?php include '../navigation.php'; ?>
 
-    if (empty($nom) || empty($email) || empty($mot_de_passe)) {
-        die("Veuillez remplir tous les champs.");
-    }
+        <!-- Contenu de la page Inscription -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto">
+            <h1 class="text-2xl font-bold text-navy-900 mb-4 text-center">Inscription</h1>
+            <!-- Formulaire d'inscription -->
+        </div>
 
-    try {
-        // 1. Requête préparée pour vérifier si l'email existe déjà
-        $stmt_check = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = :email");
-        $stmt_check->execute(['email' => $email]);
-
-        if ($stmt_check->fetch()) {
-            die("Cet email est déjà utilisé par un autre compte.");
-        }
-
-        // 2. Hachage sécurisé du mot de passe
-        $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-
-        // 3. Requête préparée pour insérer le nouvel utilisateur
-        $stmt_insert = $pdo->prepare("INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (:nom, :email, :mot_de_passe)");
-        $stmt_insert->execute([
-            'nom' => $nom,
-            'email' => $email,
-            'mot_de_passe' => $hash
-        ]);
-
-        echo "<h2>✅ Inscription réussie !</h2>";
-        echo "<p><a href='../pages/connexion.html'>Cliquer ici pour vous connecter</a></p>";
-
-    } catch (PDOException $e) {
-        echo "Erreur lors de l'inscription : " . $e->getMessage();
-    }
-}
-?>
+    </div>
+</body>
+</html>

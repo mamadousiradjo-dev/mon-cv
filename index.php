@@ -1,50 +1,48 @@
 <?php
-// Connexion à la base de données
-require_once 'backend/db.php';
+// Activation du rapport d'erreurs
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-try {
-    // Récupération de la photo de profil depuis MySQL
-    $stmtProfile = $pdo->query("SELECT profile_photo_path FROM user_profile LIMIT 1");
-    $profile = $stmtProfile->fetch(PDO::FETCH_ASSOC);
-    $photoPath = $profile['profile_photo_path'] ?? 'images/MAMADOU SIRADJO BALDE.jpeg';
+// Variables par défaut
+$user = null;
+$photoPath = 'images/MAMADOU SIRADJO BALDE.jpeg';
 
-    // Récupération des expériences depuis MySQL
-    $stmtExp = $pdo->query("SELECT * FROM experiences ORDER BY id DESC");
-    $experiences = $stmtExp->fetchAll(PDO::FETCH_ASSOC);
+// Inclusion sécurisée du fichier de connexion
+require_once __DIR__ . '/backend/db.php';
 
-    // Récupération des formations depuis MySQL
-    $stmtForm = $pdo->query("SELECT * FROM formations ORDER BY id DESC");
-    $formations = $stmtForm->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Erreur d'accès à la base de données : " . $e->getMessage());
+// Si la BDD est connectée et fonctionnelle, on récupère la photo
+if (isset($pdo) && $pdo !== null) {
+    try {
+        $stmt = $pdo->query("SELECT * FROM user_profile WHERE id = 1 LIMIT 1");
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && !empty($user['profile_photo_path'])) {
+            $photoPath = $user['profile_photo_path'];
+        }
+    } catch (Exception $e) {
+        // En cas d'erreur SQL, on garde la photo par défaut
+    }
 }
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="bg-slate-100">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mamadou Siradjo Balde - Portfolio & CV</title>
+    <title>Mamadou Siradjo Balde - Portfolio</title>
+    <!-- Police Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome pour de vraies icônes professionnelles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Importation de la police Poppins depuis Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
                     colors: {
                         navy: {
-                            800: '#1e3a5f',
-                            900: '#132e4f',
-                            950: '#0f233d',
+                            900: '#0F2C59',
+                            800: '#183B70',
                         }
                     }
                 }
@@ -52,156 +50,173 @@ try {
         }
     </script>
 </head>
-<body class="bg-slate-200 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-800">
+<body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4 sm:px-6 lg:px-8 antialiased">
 
     <div class="max-w-5xl mx-auto space-y-6">
-        
-        <!-- Inclusion du composant de navigation (Issue #2) -->
-        <?php include 'navigation.php'; ?>
 
-        <!-- Contenu Principal sur 2 colonnes -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[780px]">
+        <!-- Composant de navigation modulaire -->
+        <?php include __DIR__ . '/navigation.php'; ?>
+
+        <!-- Carte principale CV / Portfolio -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
             
-            <!-- Colonne de Gauche : Bleu Marine -->
-            <aside class="w-full md:w-2/5 bg-navy-900 text-white p-8 flex flex-col items-center text-center space-y-6">
+            <!-- Colonne Gauche : Carte d'identité / Profil -->
+            <div class="bg-navy-900 text-white md:w-1/3 p-8 flex flex-col items-center text-center space-y-6">
                 
-                <!-- Photo de Profil Dynamique avec bouton d'upload (Issue #1) -->
-                <div class="pt-2 relative group">
-                    <img id="profileImage" src="<?= htmlspecialchars($photoPath) ?>" alt="Mamadou Siradjo Balde" class="w-36 h-36 rounded-full border-4 border-white/90 object-cover shadow-xl mx-auto">
+                <!-- Zone Photo avec Upload AJAX -->
+                <div class="relative group">
+                    <img id="profile-img" src="<?php echo htmlspecialchars($photoPath); ?>" alt="Photo de profil" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                     
-                    <form id="uploadForm" class="mt-3">
-                        <label for="photoInput" class="cursor-pointer bg-sky-600 hover:bg-sky-500 text-white text-xs py-1.5 px-3 rounded-md transition inline-flex items-center gap-2 shadow">
-                            <i class="fas fa-camera"></i> Changer la photo
+                    <form id="upload-form" class="mt-3">
+                        <label for="profile_photo" class="cursor-pointer inline-flex items-center space-x-2 text-xs bg-sky-500 hover:bg-sky-600 text-white font-semibold py-1.5 px-3 rounded-lg shadow transition">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Changer la photo</span>
                         </label>
-                        <input type="file" id="photoInput" name="profile_photo" accept="image/jpeg,image/png,image/gif" class="hidden" onchange="uploadPhoto()">
+                        <input type="file" id="profile_photo" name="profile_photo" accept="image/*" class="hidden" onchange="uploadImage()">
                     </form>
                 </div>
 
-                <!-- Identité -->
+                <!-- Informations Personnelles -->
                 <div>
-                    <h1 class="text-xl font-bold uppercase tracking-wider leading-snug">Mamadou Siradjo</h1>
-                    <h1 class="text-xl font-bold uppercase tracking-wider leading-snug">Balde</h1>
-                    <p class="text-xs text-sky-300 uppercase font-semibold mt-3 tracking-widest bg-navy-950/50 py-1.5 px-3 rounded-md border border-sky-800/40">Etudiant en Génie Informatique</p>
+                    <h1 class="text-xl font-bold tracking-wider">MAMADOU SIRADJO BALDE</h1>
+                    <p class="text-xs text-sky-300 font-semibold tracking-widest mt-1 uppercase">ETUDIANT EN GENIE INFORMATIQUE</p>
                 </div>
 
-                <!-- Contact -->
-                <div class="w-full text-left border-t border-sky-800/60 pt-5 space-y-3">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-sky-300">Contact</h3>
-                    <ul class="text-xs space-y-2.5 text-slate-200 font-normal">
-                        <li class="flex items-center gap-3"><i class="fas fa-phone w-4 text-sky-400 text-center"></i> +224 624 18 55 47</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-envelope w-4 text-sky-400 text-center"></i> mamadousiradjob49@gmail.com</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-map-marker-alt w-4 text-sky-400 text-center"></i> Conakry, Guinée</li>
+                <hr class="w-full border-slate-700">
+
+                <!-- Coordonnées avec VRAIES ICÔNES -->
+                <div class="w-full text-left space-y-3 text-xs text-slate-300">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-phone text-sky-400 w-4 text-center"></i>
+                        <span>+224 624 18 55 47</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-envelope text-sky-400 w-4 text-center"></i>
+                        <span>mamadousiradjob49@gmail.com</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-location-dot text-sky-400 w-4 text-center"></i>
+                        <span>Conakry, Guinée</span>
+                    </div>
+                </div>
+
+                <hr class="w-full border-slate-700">
+
+                <!-- Compétences avec Icônes -->
+                <div class="w-full text-left space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center space-x-2">
+                        <i class="fa-solid fa-code"></i>
+                        <span>COMPETENCES</span>
+                    </h3>
+                    <ul class="text-xs space-y-2 text-slate-300">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-brands fa-html5 text-orange-400"></i>
+                            <span>HTML5 / CSS3 / Tailwind CSS</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-brands fa-php text-indigo-300"></i>
+                            <span>PHP / MySQL (PDO)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-brands fa-git-alt text-orange-500"></i>
+                            <span>Git & GitHub</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-database text-sky-300"></i>
+                            <span>Bases de données & Systèmes</span>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Compétences -->
-                <div class="w-full text-left border-t border-sky-800/60 pt-5 space-y-2.5">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-sky-300">Compétences</h3>
-                    <ul class="text-xs space-y-2 text-slate-200 font-normal list-disc list-inside">
-                        <li>HTML5 / CSS3 / Tailwind CSS</li>
-                        <li>PHP / MySQL (PDO)</li>
-                        <li>Git & GitHub</li>
-                        <li>Bases de données & Systèmes</li>
-                    </ul>
-                </div>
+            </div>
 
-                <!-- Langues -->
-                <div class="w-full text-left border-t border-sky-800/60 pt-5 space-y-2">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-sky-300">Langues</h3>
-                    <p class="text-xs text-slate-200 font-normal">Français (Courant)</p>
-                </div>
-
-            </aside>
-
-            <!-- Colonne de Droite : Fond Blanc -->
-            <main class="w-full md:w-3/5 p-10 space-y-8 bg-white">
+            <!-- Colonne Droite : Contenu du CV -->
+            <div class="md:w-2/3 p-8 space-y-8">
                 
                 <!-- Section Profil -->
                 <section>
-                    <h2 class="text-sm font-bold text-navy-900 uppercase tracking-wider border-b-2 border-navy-900 pb-2 mb-3">Profil</h2>
-                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
-                        Etudiant en génie informatique, motivé et passionné par les technologies numériques. Je développe progressivement mes compétences en programmation, développement web, bases de données et outils informatiques.
+                    <h2 class="text-lg font-bold text-navy-900 border-b-2 border-navy-900 pb-1 mb-3 uppercase flex items-center space-x-2">
+                        <i class="fa-solid fa-user-gear text-navy-900 text-sm"></i>
+                        <span>PROFIL</span>
+                    </h2>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Etudiant motivé et passionné par les technologies numériques. Je développe mes compétences en programmation, développement web, bases de données et outils informatiques.
                     </p>
                 </section>
 
-                <!-- Section Formation (Dynamique MySQL) -->
+                <!-- Section Formation -->
                 <section>
-                    <h2 class="text-sm font-bold text-navy-900 uppercase tracking-wider border-b-2 border-navy-900 pb-2 mb-3">Formation</h2>
-                    <div class="space-y-4">
-                        <?php if (!empty($formations)): ?>
-                            <?php foreach ($formations as $form): ?>
-                                <div>
-                                    <h3 class="text-sm font-semibold text-navy-900"><?= htmlspecialchars($form['diplome']) ?></h3>
-                                    <p class="text-xs text-slate-500 font-normal mt-0.5"><?= htmlspecialchars($form['etablissement']) ?> <span class="text-slate-400">• <?= htmlspecialchars($form['annee']) ?></span></p>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+                    <h2 class="text-lg font-bold text-navy-900 border-b-2 border-navy-900 pb-1 mb-3 uppercase flex items-center space-x-2">
+                        <i class="fa-solid fa-graduation-cap text-navy-900 text-sm"></i>
+                        <span>FORMATION</span>
+                    </h2>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-start">
                             <div>
                                 <h3 class="text-sm font-semibold text-navy-900">Brevet Technique 3 (BT3) - Génie Informatique</h3>
-                                <p class="text-xs text-slate-500 font-normal mt-0.5">Université Mahatma Gandhi • En cours (3ème année)</p>
+                                <p class="text-xs text-slate-500 mt-0.5 flex items-center space-x-1">
+                                    <i class="fa-solid fa-building-columns text-slate-400 text-xs mr-1"></i>
+                                    <span>Université Mahatma Gandhi • En cours (3ème année)</span>
+                                </p>
                             </div>
-                        <?php endif; ?>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Section Experience (Dynamique MySQL) -->
+                <!-- Section Expérience / Projets -->
                 <section>
-                    <h2 class="text-sm font-bold text-navy-900 uppercase tracking-wider border-b-2 border-navy-900 pb-2 mb-3">Experience</h2>
-                    <div class="space-y-5">
-                        <?php if (!empty($experiences)): ?>
-                            <?php foreach ($experiences as $exp): ?>
-                                <div>
-                                    <div class="flex justify-between items-baseline">
-                                        <h3 class="text-sm font-semibold text-navy-900"><?= htmlspecialchars($exp['titre']) ?></h3>
-                                        <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded"><?= htmlspecialchars($exp['periode']) ?></span>
-                                    </div>
-                                    <p class="text-xs text-sky-700 font-medium mt-0.5"><?= htmlspecialchars($exp['entreprise']) ?></p>
-                                    <p class="text-xs text-slate-600 leading-relaxed mt-1.5 font-normal"><?= htmlspecialchars($exp['description']) ?></p>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <div>
+                    <h2 class="text-lg font-bold text-navy-900 border-b-2 border-navy-900 pb-1 mb-3 uppercase flex items-center space-x-2">
+                        <i class="fa-solid fa-briefcase text-navy-900 text-sm"></i>
+                        <span>EXPERIENCE</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between items-center">
                                 <h3 class="text-sm font-semibold text-navy-900">Projet Web : Portfolio CV Dynamique</h3>
-                                <p class="text-xs text-sky-700 font-medium mt-0.5">Projet Académique / Personnel</p>
-                                <p class="text-xs text-slate-600 leading-relaxed mt-1.5 font-normal">Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS et gestion de base de données.</p>
+                                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">2026</span>
                             </div>
-                        <?php endif; ?>
+                            <p class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
+                            <p class="text-xs text-slate-600 mt-1">
+                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS et mise en place d'un système d'authentification sécurisé.
+                            </p>
+                        </div>
                     </div>
                 </section>
 
-            </main>
+            </div>
 
         </div>
 
     </div>
 
-    <!-- Script JavaScript pour l'upload AJAX -->
+    <!-- Script pour l'upload AJAX -->
     <script>
-    function uploadPhoto() {
-        const input = document.getElementById('photoInput');
-        if (!input.files || !input.files[0]) return;
+        function uploadImage() {
+            const fileInput = document.getElementById('profile_photo');
+            const file = fileInput.files[0];
+            if (!file) return;
 
-        const formData = new FormData();
-        formData.append('profile_photo', input.files[0]);
+            const formData = new FormData();
+            formData.append('profile_photo', file);
 
-        fetch('backend/upload_profile.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('profileImage').src = data.photo_url + '?t=' + new Date().getTime();
-                alert(data.message);
-            } else {
-                alert('Erreur : ' + data.message);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Erreur lors de l\'envoi du fichier.');
-        });
-    }
+            fetch('backend/upload_profile.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('profile-img').src = data.photo_url + '?t=' + new Date().getTime();
+                    alert(data.message);
+                } else {
+                    alert('Erreur : ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'envoi du fichier.');
+            });
+        }
     </script>
 </body>
 </html>

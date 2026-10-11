@@ -1,38 +1,23 @@
-<?php
-// backend/connexion.php
-session_start();
-require_once 'db.php';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4">
+    <div class="max-w-5xl mx-auto space-y-6">
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
-    $mot_de_passe = $_POST['mot_de_passe'] ?? '';
+        <!-- Inclusion du menu de navigation -->
+        <?php include '../navigation.php'; ?>
 
-    if (empty($email) || empty($mot_de_passe)) {
-        die("Veuillez remplir tous les champs.");
-    }
+        <!-- Contenu de la page Connexion -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto">
+            <h1 class="text-2xl font-bold text-navy-900 mb-4 text-center">Connexion</h1>
+            <!-- Formulaire de connexion -->
+        </div>
 
-    try {
-        // 1. Requête préparée pour récupérer l'utilisateur par son email
-        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = :email");
-        $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch();
-
-        // 2. Vérification de l'existence de l'utilisateur et du mot de passe
-        if ($user && password_verify($mot_de_passe, $user['mot_de_passe'])) {
-            // Création de la session utilisateur
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_nom'] = $user['nom'];
-            $_SESSION['user_email'] = $user['email'];
-
-            echo "<h2>🎉 Connexion réussie ! Bienvenue " . htmlspecialchars($user['nom']) . "</h2>";
-            echo "<p><a href='voir_utilisateurs.php'>Voir la liste des utilisateurs</a></p>";
-        } else {
-            echo "<h2>❌ Email ou mot de passe incorrect.</h2>";
-            echo "<p><a href='../pages/connexion.html'>Réessayer</a></p>";
-        }
-
-    } catch (PDOException $e) {
-        echo "Erreur de connexion : " . $e->getMessage();
-    }
-}
-?>
+    </div>
+</body>
+</html>
