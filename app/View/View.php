@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure;
+namespace App\View;
 
 final class View
 {
@@ -9,7 +9,7 @@ final class View
     {
         // Le contrôleur choisit une vue connue ; le navigateur ne fournit jamais ce nom.
         extract($data, EXTR_SKIP);
-        require dirname(__DIR__) . '/View/' . $name . '.php';
+        require __DIR__ . '/' . $name . '.php';
     }
 
     public static function e(mixed $value): string

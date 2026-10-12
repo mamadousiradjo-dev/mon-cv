@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Infrastructure\AuthSession;
-use App\Infrastructure\Response;
 use App\Model\UserModel;
+use App\Repository\UserRepository;
 use PDOException;
 
 final class AuthController
 {
-    public function __construct(private readonly ?UserModel $users) {}
+    public function __construct(private readonly ?UserRepository $users) {}
 
     public function register(): never
     {
@@ -54,11 +53,11 @@ final class AuthController
         if (!is_string($email) || !is_string($password) || strlen($email) > 190 || strlen($password) > 1024) {
             $this->reject('/connexion', 'Identifiants invalides.');
         }
-        $user = $this->users->byEmail(strtolower(trim($email)));
-        if ($user === false || !password_verify($password, $user['mot_de_passe'])) {
+        $user = $this->users->authenticate(strtolower(trim($email)), $password);
+        if ($user === null) {
             $this->reject('/connexion', 'Identifiants invalides.');
         }
-        AuthSession::login((int) $user['id']);
+        AuthSession::login($user->id);
         Response::redirect('/');
     }
 
@@ -69,11 +68,11 @@ final class AuthController
         Response::redirect('/');
     }
 
-    public function requireOwner(): array
+    public function requireOwner(): UserModel
     {
         $id = AuthSession::userId();
-        $user = $id === null || $this->users === null ? false : $this->users->byId($id);
-        if ($user === false || $user['role'] !== 'admin') {
+        $user = $id === null || $this->users === null ? null : $this->users->byId($id);
+        if ($user === null || !$user->isOwner()) {
             Response::error(403, 'Accès réservé au propriétaire.');
         }
         return $user;

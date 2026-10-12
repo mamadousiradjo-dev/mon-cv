@@ -6,9 +6,9 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-require dirname(__DIR__) . '/app/Infrastructure/Database.php';
+require dirname(__DIR__) . '/app/Repository/Connection.php';
 
-$pdo = App\Infrastructure\Database::connect();
+$pdo = App\Repository\Connection::connect();
 if ($pdo === null) {
     fwrite(STDERR, "Configure DB_NAME, DB_USER et DB_PASSWORD avant l'initialisation.\n");
     exit(1);

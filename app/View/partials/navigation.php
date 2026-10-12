@@ -1,5 +1,5 @@
 <?php
-use App\Infrastructure\View;
+use App\View\View;
 
 $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $links = [
@@ -22,10 +22,10 @@ $links = [
         <a href="/inscription" class="hover:text-sky-300">Inscription</a>
         <a href="/connexion" class="hover:text-sky-300">Connexion</a>
     <?php else: ?>
-        <?php if ($user['role'] === 'admin'): ?>
+        <?php if ($user->isOwner()): ?>
             <a href="/utilisateurs" class="hover:text-sky-300">Utilisateurs</a>
         <?php endif; ?>
-        <span class="text-sky-300"><?= View::e($user['nom']) ?></span>
+        <span class="text-sky-300"><?= View::e($user->name) ?></span>
         <form action="/deconnexion" method="post">
             <input type="hidden" name="csrf" value="<?= View::e($csrf) ?>">
             <button type="submit" class="hover:text-sky-300">Déconnexion</button>

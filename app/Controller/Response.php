@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure;
+namespace App\Controller;
+
+use App\View\View;
 
 final class Response
 {
@@ -15,9 +17,7 @@ final class Response
     {
         http_response_code($status);
         header('Content-Type: text/html; charset=utf-8');
-        echo '<!DOCTYPE html><html lang="fr"><meta charset="UTF-8"><title>Erreur</title>';
-        echo '<body><h1>Erreur ' . $status . '</h1><p>' . View::e($message) . '</p>';
-        echo '<p><a href="/">Retour à l’accueil</a></p></body></html>';
+        View::render('pages/error', ['status' => $status, 'message' => $message]);
         exit;
     }
 }

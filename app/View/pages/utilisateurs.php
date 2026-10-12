@@ -1,4 +1,4 @@
-<?php use App\Infrastructure\View; ?>
+<?php use App\View\View; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,8 +18,8 @@
             <ul class="space-y-3">
                 <?php foreach ($users as $account): ?>
                     <li class="rounded-lg border border-slate-200 p-3">
-                        <?= View::e($account['nom']) ?> — <?= View::e($account['email']) ?>
-                        (<?= $account['role'] === 'admin' ? 'propriétaire' : 'utilisateur' ?>)
+                        <?= View::e($account->name) ?> — <?= View::e($account->email) ?>
+                        (<?= $account->isOwner() ? 'propriétaire' : 'utilisateur' ?>)
                     </li>
                 <?php endforeach; ?>
             </ul>

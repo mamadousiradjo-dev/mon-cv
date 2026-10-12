@@ -1,4 +1,4 @@
-<?php use App\Infrastructure\View; ?>
+<?php use App\View\View; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -30,10 +30,10 @@
                 
                 <!-- Photo du CV -->
                 <div class="relative">
-                    <img id="profile-img" src="<?= View::e(View::photoUrl($cv['photo'])) ?>" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+                    <img id="profile-img" src="<?= View::e(View::photoUrl($cv->photo)) ?>" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                 </div>
 
-                <?php if ($user !== null && $user['role'] === 'admin'): ?>
+                <?php if ($user !== null && $user->isOwner()): ?>
                     <form action="/photo" method="post" enctype="multipart/form-data" class="w-full space-y-2">
                         <input type="hidden" name="csrf" value="<?= View::e($csrf) ?>">
                         <label for="photo-file" class="block text-xs font-semibold">Changer la photo du CV</label>
@@ -121,10 +121,10 @@
                     <div class="space-y-2">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 id="formation-diplome" class="text-sm font-semibold text-navy-900"><?= View::e($cv['formation']['diplome']) ?></h3>
+                                <h3 id="formation-diplome" class="text-sm font-semibold text-navy-900"><?= View::e($cv->formation['diplome']) ?></h3>
                                 <p class="text-xs text-slate-500 mt-0.5 flex items-center space-x-1">
                                     <i class="fa-solid fa-building-columns text-slate-400 text-xs mr-1"></i>
-                                    <span id="formation-detail"><?= View::e($cv['formation']['etablissement']) ?> • <?= View::e($cv['formation']['annee']) ?></span>
+                                    <span id="formation-detail"><?= View::e($cv->formation['etablissement']) ?> • <?= View::e($cv->formation['annee']) ?></span>
                                 </p>
                             </div>
                         </div>
@@ -140,12 +140,12 @@
                     <div class="space-y-4">
                         <div>
                             <div class="flex justify-between items-center">
-                                <h3 id="experience-titre" class="text-sm font-semibold text-navy-900"><?= View::e($cv['experience']['titre']) ?></h3>
-                                <span id="experience-periode" class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded"><?= View::e($cv['experience']['periode']) ?></span>
+                                <h3 id="experience-titre" class="text-sm font-semibold text-navy-900"><?= View::e($cv->experience['titre']) ?></h3>
+                                <span id="experience-periode" class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded"><?= View::e($cv->experience['periode']) ?></span>
                             </div>
-                            <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5"><?= View::e($cv['experience']['entreprise']) ?></p>
+                            <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5"><?= View::e($cv->experience['entreprise']) ?></p>
                             <p id="experience-description" class="text-xs text-slate-600 mt-1">
-                                <?= View::e($cv['experience']['description']) ?>
+                                <?= View::e($cv->experience['description']) ?>
                             </p>
                         </div>
                     </div>

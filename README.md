@@ -1,6 +1,6 @@
 # CV de Mamadou Siradjo Baldé
 
-Une application PHP **MVC** : les contrôleurs traitent les requêtes, les modèles lisent et écrivent dans MySQL, et les vues PHP produisent les pages HTML. Le site utilise un seul serveur et un seul port. Le CV reste visible avec ses données de secours si MySQL est arrêté.
+Une application PHP **MVC avec Repository** : les contrôleurs traitent les requêtes, les modèles représentent les données, les repositories lisent et écrivent dans MySQL, et les vues PHP produisent les pages HTML. Le site utilise un seul serveur et un seul port. Le CV reste visible avec ses données de secours si MySQL est arrêté.
 
 ## Démarrage local
 
@@ -14,16 +14,18 @@ DB_HOST=127.0.0.1 DB_PORT=3307 DB_NAME=mon_cv DB_USER=mon_cv DB_PASSWORD=mon_cv_
 
 Ouvrir <http://127.0.0.1:8000>. Le dossier `public/` est le seul dossier exposé au navigateur : les modèles, les vues et les scripts CLI restent en dehors de cette racine web. Les photos envoyées sont publiques sous `/uploads/`. `public/router.php` laisse PHP servir directement le CSS et les images, puis transmet les autres requêtes à `public/index.php`.
 
-## Organisation MVC
+## Organisation MVC + Repository
 
-- `app/Model/` : accès aux données du CV et des comptes avec PDO et requêtes préparées.
-- `app/Controller/` : choix des vues, validation des formulaires, droits d'accès et photo.
-- `app/View/` : pages HTML/PHP et navigation partagée. Toute donnée provenant de MySQL est échappée avant affichage.
-- `app/Infrastructure/` : connexion MySQL, session, réponses HTTP et rendu des vues.
+- `app/Model/` : données du CV et des utilisateurs, sans requête SQL ni HTML.
+- `app/Repository/` : connexion PDO et requêtes préparées pour charger et enregistrer les modèles.
+- `app/Controller/` : choix des vues, validation des formulaires, session, réponses HTTP, droits d'accès et photo.
+- `app/View/` : pages HTML/PHP, navigation partagée et échappement des données avant affichage.
 - `public/` : point d'entrée, routeur, CSS et images publiques.
 - `assets/` : sources Tailwind et dépendances Node locales au dossier.
 - `bin/` : commandes réservées au terminal.
 - `public/uploads/` : photos envoyées, ignorées par Git et accessibles directement par URL. Le contrôleur vérifie leur format avant de les enregistrer.
+
+Chemin d’une requête : `public/index.php` → contrôleur → repository → modèle → vue. `bin/` ne contient que les commandes terminal ; le site web ne charge pas de fichier depuis ce dossier.
 
 Les routes des pages sont `/`, `/projets`, `/contact`, `/inscription`, `/connexion` et `/utilisateurs`. Les formulaires utilisent `POST` et un jeton CSRF stocké en session. Les pages sont rendues sur le serveur ; aucun JavaScript n'est requis pour l'authentification.
 

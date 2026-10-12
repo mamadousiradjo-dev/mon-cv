@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure;
+namespace App\Repository;
 
 use PDO;
 use PDOException;
 
-final class Database
+final class Connection
 {
     public static function connect(): ?PDO
     {

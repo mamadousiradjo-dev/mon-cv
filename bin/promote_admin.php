@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 // Promotion manuelle : ne jamais donner le rôle admin depuis un formulaire public.
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
-require dirname(__DIR__) . '/app/Infrastructure/Database.php';
+require dirname(__DIR__) . '/app/Repository/Connection.php';
 $email = strtolower(trim($argv[1] ?? ''));
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     fwrite(STDERR, "Usage : php bin/promote_admin.php adresse@email\n");
     exit(1);
 }
-$pdo = App\Infrastructure\Database::connect();
+$pdo = App\Repository\Connection::connect();
 if ($pdo === null) { fwrite(STDERR, "Base de données indisponible.\n"); exit(1); }
 $query = $pdo->prepare("UPDATE utilisateurs SET role = 'admin' WHERE email = ?");
 $query->execute([$email]);

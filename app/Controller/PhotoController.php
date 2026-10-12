@@ -3,16 +3,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Infrastructure\AuthSession;
-use App\Infrastructure\Response;
-use PDO;
+use App\Repository\CvRepository;
 
 final class PhotoController
 {
     private const MAX_BYTES = 5 * 1024 * 1024;
 
     public function __construct(
-        private readonly ?PDO $database,
+        private readonly CvRepository $cv,
         private readonly AuthController $auth,
     ) {}
 
@@ -20,10 +18,6 @@ final class PhotoController
     {
         $this->auth->requireOwner();
         AuthSession::verify();
-        if ($this->database === null) {
-            Response::error(503, 'Base de données indisponible.');
-        }
-
         $file = $_FILES['photo'] ?? null;
         if (!is_array($file) || $file['error'] !== UPLOAD_ERR_OK ||
             $file['size'] < 1 || $file['size'] > self::MAX_BYTES ||
@@ -53,9 +47,12 @@ final class PhotoController
         }
 
         try {
-            $query = $this->database->prepare('UPDATE user_profile SET profile_photo_path = ? WHERE id = 1');
-            $query->execute(['uploads/' . $filename]);
-            if ($query->rowCount() === 0) {
+            $saved = $this->cv->updatePhoto('uploads/' . $filename);
+            if ($saved === null) {
+                unlink($destination);
+                Response::error(503, 'Base de données indisponible.');
+            }
+            if (!$saved) {
                 throw new \RuntimeException('Profil absent. Lancez setup.php.');
             }
         } catch (\Throwable $exception) {

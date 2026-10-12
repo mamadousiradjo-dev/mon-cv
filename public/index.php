@@ -17,17 +17,18 @@ spl_autoload_register(static function (string $class): void {
 use App\Controller\AuthController;
 use App\Controller\PageController;
 use App\Controller\PhotoController;
-use App\Infrastructure\Database;
-use App\Infrastructure\Response;
-use App\Model\CvModel;
-use App\Model\UserModel;
+use App\Controller\Response;
+use App\Repository\Connection;
+use App\Repository\CvRepository;
+use App\Repository\UserRepository;
 
 header('X-Content-Type-Options: nosniff');
-$database = Database::connect();
-$users = $database === null ? null : new UserModel($database);
-$pages = new PageController(new CvModel($database), $users);
+$database = Connection::connect();
+$users = $database === null ? null : new UserRepository($database);
+$cv = new CvRepository($database);
+$pages = new PageController($cv, $users);
 $auth = new AuthController($users);
-$photos = new PhotoController($database, $auth);
+$photos = new PhotoController($cv, $auth);
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
