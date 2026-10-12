@@ -1,6 +1,6 @@
 .DS_Store
 assets/node_modules/
-storage/uploads/*
-!storage/uploads/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep
 .vscode/
 *.log

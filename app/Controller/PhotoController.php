@@ -37,13 +37,18 @@ final class PhotoController
             $this->reject('Format d’image invalide.');
         }
 
-        $directory = dirname(__DIR__, 2) . '/storage/uploads';
-        if (!is_dir($directory) && !mkdir($directory, 0750, true)) {
+        $directory = dirname(__DIR__, 2) . '/public/uploads';
+        if (!is_dir($directory) && !mkdir($directory, 0755, true)) {
             Response::error(500, 'Stockage indisponible.');
         }
         $filename = bin2hex(random_bytes(16)) . '.' . $extensions[$mime];
         $destination = $directory . '/' . $filename;
         if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            Response::error(500, 'Envoi impossible.');
+        }
+
+        if (!chmod($destination, 0644)) {
+            unlink($destination);
             Response::error(500, 'Envoi impossible.');
         }
 
@@ -59,20 +64,6 @@ final class PhotoController
         }
         AuthSession::flash('Photo enregistrée.');
         Response::redirect('/');
-    }
-
-    public static function show(string $filename): never
-    {
-        $path = dirname(__DIR__, 2) . '/storage/uploads/' . $filename;
-        if (!is_file($path)) {
-            Response::error(404, 'Image introuvable.');
-        }
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        header('Content-Type: ' . ['jpg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp'][$extension]);
-        header('X-Content-Type-Options: nosniff');
-        header('Cache-Control: public, max-age=3600');
-        readfile($path);
-        exit;
     }
 
     private function reject(string $message): never

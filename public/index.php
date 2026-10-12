@@ -44,9 +44,6 @@ try {
         case 'GET /utilisateurs': $pages->users(); break;
         case 'POST /photo': $photos->upload(); break;
         default:
-            if ($method === 'GET' && preg_match('~^/photos/([a-f0-9]{32}\.(?:jpg|png|webp))$~', $path, $match)) {
-                PhotoController::show($match[1]);
-            }
             Response::error(404, 'Page introuvable.');
     }
 } catch (Throwable $exception) {
