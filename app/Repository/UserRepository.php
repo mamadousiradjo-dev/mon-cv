@@ -6,13 +6,20 @@ namespace App\Repository;
 use App\Model\UserModel;
 use PDO;
 
-// Les requêtes SQL et les hachages restent ici, loin des vues.
 final class UserRepository
 {
     public function __construct(private readonly PDO $database) {}
 
-    public function create(string $name, string $email, string $password): int
+    public function register(string $name, string $email, string $password, string $confirmation): int
     {
+        $name = trim($name);
+        $email = strtolower(trim($email));
+        if (mb_strlen($name) < 2 || mb_strlen($name) > 80 ||
+            !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 190 ||
+            strlen($password) < 12 || strlen($password) > 1024 || $password !== $confirmation) {
+            throw new \InvalidArgumentException('Vérifiez le nom, l’e-mail et les mots de passe (12 caractères minimum).');
+        }
+
         $query = $this->database->prepare('INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (?, ?, ?)');
         $query->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT)]);
         return (int) $this->database->lastInsertId();
@@ -20,13 +27,15 @@ final class UserRepository
 
     public function authenticate(string $email, string $password): ?UserModel
     {
-        $query = $this->database->prepare('SELECT id, nom, email, mot_de_passe, role FROM utilisateurs WHERE email = ? LIMIT 1');
-        $query->execute([$email]);
-        $row = $query->fetch();
-        if ($row === false || !password_verify($password, $row['mot_de_passe'])) {
+        if (strlen($email) > 190 || strlen($password) > 1024) {
             return null;
         }
-        return self::toModel($row);
+        $query = $this->database->prepare('SELECT id, nom, email, mot_de_passe, role FROM utilisateurs WHERE email = ? LIMIT 1');
+        $query->execute([strtolower(trim($email))]);
+        $row = $query->fetch();
+        return $row !== false && password_verify($password, $row['mot_de_passe'])
+            ? self::toModel($row)
+            : null;
     }
 
     public function byId(int $id): ?UserModel

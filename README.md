@@ -1,6 +1,6 @@
 # CV de Mamadou Siradjo Baldé
 
-Une application PHP **MVC avec Repository** : les contrôleurs traitent les requêtes, les modèles représentent les données, les repositories lisent et écrivent dans MySQL, et les vues PHP produisent les pages HTML. Le site utilise un seul serveur et un seul port. Le CV reste visible avec ses données de secours si MySQL est arrêté.
+Une application PHP **MVC avec Repository** : les contrôleurs traitent les requêtes, les modèles représentent les données, les repositories valident et enregistrent les données dans MySQL, et les vues PHP produisent les pages HTML. Le site utilise un seul serveur et un seul port. Le CV reste visible avec ses données de secours si MySQL est arrêté.
 
 ## Démarrage local
 
@@ -17,8 +17,8 @@ Ouvrir <http://127.0.0.1:8000>. Le dossier `public/` est le seul dossier exposé
 ## Organisation MVC + Repository
 
 - `app/Model/` : données du CV et des utilisateurs, sans requête SQL ni HTML.
-- `app/Repository/` : `DbConnection.php` ouvre MySQL ; les autres repositories chargent et enregistrent les modèles avec des requêtes préparées.
-- `app/Controller/` : choix des vues, validation des formulaires, session, réponses HTTP, droits d'accès et photo.
+- `app/Repository/` : `DbConnection.php` ouvre MySQL ; les autres repositories valident les entrées, puis chargent et enregistrent les données avec des requêtes préparées.
+- `app/Controller/` : routage des actions, session, réponses HTTP et droits d'accès.
 - `app/View/` : pages HTML/PHP, navigation partagée et échappement des données avant affichage.
 - `public/` : point d'entrée, routeur, CSS et images publiques.
 - `assets/` : sources Tailwind et dépendances Node locales au dossier.

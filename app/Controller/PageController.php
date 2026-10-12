@@ -43,24 +43,9 @@ final class PageController
         $this->show('home', ['cv' => $this->cv->find()]);
     }
 
-    public function projects(): void
+    public function page(string $name): void
     {
-        $this->show('pages/projets');
-    }
-
-    public function contact(): void
-    {
-        $this->show('pages/contact');
-    }
-
-    public function register(): void
-    {
-        $this->show('pages/inscription');
-    }
-
-    public function login(): void
-    {
-        $this->show('pages/connexion');
+        $this->show('pages/' . $name);
     }
 
     public function users(): void

@@ -35,11 +35,11 @@ $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 try {
     switch ($method . ' ' . $path) {
         case 'GET /': $pages->home(); break;
-        case 'GET /projets': $pages->projects(); break;
-        case 'GET /contact': $pages->contact(); break;
-        case 'GET /inscription': $pages->register(); break;
+        case 'GET /projets': $pages->page('projets'); break;
+        case 'GET /contact': $pages->page('contact'); break;
+        case 'GET /inscription': $pages->page('inscription'); break;
         case 'POST /inscription': $auth->register(); break;
-        case 'GET /connexion': $pages->login(); break;
+        case 'GET /connexion': $pages->page('connexion'); break;
         case 'POST /connexion': $auth->login(); break;
         case 'POST /deconnexion': $auth->logout(); break;
         case 'GET /utilisateurs': $pages->users(); break;
