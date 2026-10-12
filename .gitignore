@@ -1,1 +1,4 @@
 node_modules/
+
+# Ne pas versionner les futurs fichiers envoyés par des utilisateurs
+images/upload/*

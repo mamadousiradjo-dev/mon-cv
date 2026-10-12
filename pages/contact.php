@@ -7,22 +7,7 @@
     <!-- Police Poppins & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Tailwind CSS avec configuration de la couleur Navy -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: {
-                            900: '#0F2C59',
-                            800: '#183B70',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/output.css">
 </head>
 <body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4 sm:px-6 lg:px-8 antialiased">
 
@@ -63,28 +48,12 @@
                     </div>
                 </div>
 
-                <!-- Formulaire de contact -->
-                <div class="md:col-span-2">
-                    <form action="#" method="POST" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Votre Nom</label>
-                            <input type="text" name="nom" required class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Votre E-mail</label>
-                            <input type="email" name="email" required class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Votre Message</label>
-                            <textarea name="message" rows="4" required class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
-                        </div>
-                        <button type="submit" class="bg-navy-900 hover:bg-navy-800 text-white font-semibold text-xs px-5 py-2.5 rounded-lg shadow transition flex items-center space-x-2">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>Envoyer le message</span>
-                        </button>
-                    </form>
+                <!-- Contact direct : aucun traitement de formulaire n'est encore disponible. -->
+                <div class="md:col-span-2 flex items-center">
+                    <a href="mailto:mamadousiradjob49@gmail.com" class="bg-navy-900 hover:bg-navy-800 text-white font-semibold text-xs px-5 py-2.5 rounded-lg shadow transition">
+                        Écrire un e-mail
+                    </a>
                 </div>
-
             </div>
         </div>
 

@@ -1,8 +1,4 @@
 <?php
-// Activation du rapport d'erreurs
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Variables par défaut
 $user = null;
 $photoPath = 'images/MAMADOU SIRADJO BALDE.jpeg';
@@ -16,7 +12,10 @@ if (isset($pdo) && $pdo !== null) {
         $stmt = $pdo->query("SELECT * FROM user_profile WHERE id = 1 LIMIT 1");
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user && !empty($user['profile_photo_path'])) {
-            $photoPath = $user['profile_photo_path'];
+            $candidate = $user['profile_photo_path'];
+            if (str_starts_with($candidate, 'images/') && is_file(__DIR__ . '/' . $candidate)) {
+                $photoPath = $candidate;
+            }
         }
     } catch (Exception $e) {
         // En cas d'erreur SQL, on garde la photo par défaut
@@ -33,22 +32,7 @@ if (isset($pdo) && $pdo !== null) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome pour de vraies icônes professionnelles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: {
-                            900: '#0F2C59',
-                            800: '#183B70',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/output.css">
 </head>
 <body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4 sm:px-6 lg:px-8 antialiased">
 
@@ -63,17 +47,9 @@ if (isset($pdo) && $pdo !== null) {
             <!-- Colonne Gauche : Carte d'identité / Profil -->
             <div class="bg-navy-900 text-white md:w-1/3 p-8 flex flex-col items-center text-center space-y-6">
                 
-                <!-- Zone Photo avec Upload AJAX -->
-                <div class="relative group">
-                    <img id="profile-img" src="<?php echo htmlspecialchars($photoPath); ?>" alt="Photo de profil" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
-                    
-                    <form id="upload-form" class="mt-3">
-                        <label for="profile_photo" class="cursor-pointer inline-flex items-center space-x-2 text-xs bg-sky-500 hover:bg-sky-600 text-white font-semibold py-1.5 px-3 rounded-lg shadow transition">
-                            <i class="fa-solid fa-camera"></i>
-                            <span>Changer la photo</span>
-                        </label>
-                        <input type="file" id="profile_photo" name="profile_photo" accept="image/*" class="hidden" onchange="uploadImage()">
-                    </form>
+                <!-- Photo du CV -->
+                <div class="relative">
+                    <img id="profile-img" src="<?php echo htmlspecialchars($photoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                 </div>
 
                 <!-- Informations Personnelles -->
@@ -177,7 +153,7 @@ if (isset($pdo) && $pdo !== null) {
                             </div>
                             <p class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
                             <p class="text-xs text-slate-600 mt-1">
-                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS et mise en place d'un système d'authentification sécurisé.
+                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.
                             </p>
                         </div>
                     </div>
@@ -189,34 +165,5 @@ if (isset($pdo) && $pdo !== null) {
 
     </div>
 
-    <!-- Script pour l'upload AJAX -->
-    <script>
-        function uploadImage() {
-            const fileInput = document.getElementById('profile_photo');
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            const formData = new FormData();
-            formData.append('profile_photo', file);
-
-            fetch('backend/upload_profile.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('profile-img').src = data.photo_url + '?t=' + new Date().getTime();
-                    alert(data.message);
-                } else {
-                    alert('Erreur : ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert('Erreur lors de l\'envoi du fichier.');
-            });
-        }
-    </script>
 </body>
 </html>

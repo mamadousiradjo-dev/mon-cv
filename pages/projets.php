@@ -7,22 +7,7 @@
     <!-- Police Poppins & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Tailwind CSS avec configuration de la couleur Navy -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: {
-                            900: '#0F2C59',
-                            800: '#183B70',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/output.css">
 </head>
 <body class="bg-slate-200 font-['Poppins'] min-h-screen py-8 px-4 sm:px-6 lg:px-8 antialiased">
 
@@ -56,7 +41,7 @@
                     </div>
                     <h3 class="text-base font-bold text-navy-900 mb-2">Application Web Portfolio CV</h3>
                     <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                        Développement d'une plateforme web modulaire avec gestion dynamique de profil, upload de photo en AJAX, et système d'authentification sécurisé.
+                        Développement d'une plateforme web modulaire avec pages PHP, styles Tailwind et connexion MySQL facultative. L'espace d'administration reste à développer.
                     </p>
                     <div class="flex items-center space-x-2 text-xs text-slate-500 font-medium">
                         <i class="fa-brands fa-github text-slate-700"></i>
