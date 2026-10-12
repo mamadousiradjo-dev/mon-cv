@@ -1,87 +1,66 @@
-# CV Professionnel - Mamadou Siradjo Baldé
+# Mini-bibliothèque — exercice MVC
 
-## Présentation
+Le projet affiche déjà deux livres. À toi d'ajouter les autres fonctionnalités en suivant cet exemple, sans tout coder dans un seul fichier.
 
-Ce projet consiste à créer un CV professionnel sous forme de site web.
+## 1. Lancer le projet
 
-Le site présente mes informations personnelles, ma formation,
-mes compétences, mes expériences, mes projets et mes coordonnées.
+Il faut **PHP avec PDO SQLite**. Depuis la racine du dépôt :
 
-## Technologies utilisées
+```sh
+php bin/setup.php
+php -S 127.0.0.1:8001 -t public public/index.php
+```
 
-- HTML5
-- CSS3
-- Git
-- GitHub
-- GitHub Pages
+Ouvre <http://127.0.0.1:8001/>. `setup.php` crée la base et deux livres d'exemple ; tu peux le relancer sans créer de doublons. Arrête le serveur avec `Ctrl+C`.
 
-## Organisation du projet
+## 2. Comprendre l'exemple
 
-### index.html
+La page d'accueil fonctionne déjà. Suis son chemin dans le code :
 
-Cette page représente la page d'accueil du CV.
+`GET /` dans `public/index.php` → `BookController::index()` → `BookRepository::all()` → objets `Book` → `app/View/books.php`.
 
-Elle contient :
+Le **contrôleur** reçoit la requête et choisit quoi faire. Le **modèle** porte les données et les règles d'un livre. Le **repository** parle à SQLite. La **vue** affiche le HTML.
 
-- Ma photo
-- Mon nom
-- Mes coordonnées
-- Mon profil
-- Ma formation
-- Mes expériences
-- Mes compétences
-- Mes langues
-- Mes centres d'intérêt
+## 3. Ce que tu dois réaliser
 
-### projets.html
+Fais les exercices dans cet ordre :
 
-Cette page présente mes différents projets informatiques.
+1. **Ajouter un livre** : créer le formulaire, valider le titre et l'auteur, enregistrer le livre, puis revenir à la liste. Méthodes à compléter : `Book::validate()`, `BookRepository::create()`, `BookController::form()` et `BookController::create()`.
+2. **Emprunter un livre** : retrouver le livre et refuser l'emprunt s'il est déjà emprunté. Méthodes : `BookRepository::find()`, `Book::canBorrow()`, `BookRepository::setBorrowed()` et `BookController::borrow()`.
+3. **Rendre un livre** : retrouver le livre et le rendre disponible. Méthode : `BookController::returnBook()` ; réutilise les méthodes du repository.
 
-Elle contient notamment :
+Pour chaque exercice, ajoute aussi la **route** dans `public/index.php` et le **formulaire ou lien** nécessaire dans `app/View/`. Une route `GET` affiche une page ; une route `POST` traite une modification. Les `TODO` et les `LogicException` indiquent les parties que tu dois remplacer par ton code.
 
-- Projet CV professionnel
-- Gestion scolaire
-- Création de site web
-- Git et GitHub
-- Enseignement informatique
+Avance une fonctionnalité à la fois. Vérifie le résultat dans le navigateur, puis essaie aussi un cas invalide : titre vide, livre introuvable ou livre déjà emprunté. Affiche les textes venant de la base avec `htmlspecialchars()`.
 
-### contact.html
+## 4. Créer une nouvelle page
 
-Cette page permet de retrouver mes informations de contact :
+Le header et le footer sont déjà prêts dans `app/View/partials/`. Dans une nouvelle vue placée dans `app/View/`, écris seulement son contenu entre les deux inclusions :
 
-- Téléphone
-- Email
-- Localisation
+```php
+<?php
+$pageTitle = 'Ajouter un livre';
+require __DIR__ . '/partials/header.php';
+?>
+<h1>Ajouter un livre</h1>
+<!-- Ton formulaire ici -->
+<?php require __DIR__ . '/partials/footer.php'; ?>
+```
 
-### style.css
+Regarde `app/View/books.php` pour voir un exemple complet. Le header ouvre `<main>` et le footer le ferme : ne les recrée pas dans chaque page.
 
-Ce fichier contient le code CSS qui permet de mettre en forme
-le site.
+## 5. Modifier le style avec Tailwind
 
-Il permet de gérer :
+Le CSS est déjà généré : **Node.js n'est pas nécessaire pour lancer le site**. Si tu changes les classes Tailwind dans une vue PHP, installe les dépendances une fois :
 
-- Les couleurs
-- Les tailles de texte
-- Les espacements
-- La disposition des éléments
-- Les cartes des projets
-- La page Contact
-- L'adaptation aux téléphones
+```sh
+npm ci --prefix assets
+```
 
-## Navigation
+Puis reconstruis le CSS après tes changements :
 
-Le site possède un menu de navigation permettant d'accéder à :
+```sh
+npm run build:css --prefix assets
+```
 
-- Accueil
-- Projets
-- Contact
-
-## Publication
-
-Le projet est publié en ligne avec GitHub Pages.
-
-## Auteur
-
-Mamadou Siradjo Baldé
-
-Étudiant en génie informatique
+Le fichier source est `assets/css/input.css` ; le résultat servi au navigateur est `public/output.css`. Pour reconstruire automatiquement, lance `npm run dev:css --prefix assets` dans un deuxième terminal.

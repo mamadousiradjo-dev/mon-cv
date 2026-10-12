@@ -1,0 +1,12 @@
+{
+  "name": "mini-bibliotheque-styles",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/input.css -o ../public/output.css --minify",
+    "dev:css": "tailwindcss -i ./css/input.css -o ../public/output.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.0",
+    "tailwindcss": "4.3.0"
+  }
+}
