@@ -16,10 +16,12 @@ spl_autoload_register(static function (string $class): void {
 
 use App\Controller\AuthController;
 use App\Controller\PageController;
+use App\Controller\ExperienceController;
 use App\Controller\PhotoController;
 use App\Controller\Response;
 use App\Repository\DbConnection;
 use App\Repository\CvRepository;
+use App\Repository\ExperienceRepository;
 use App\Repository\UserRepository;
 
 header('X-Content-Type-Options: nosniff');
@@ -29,6 +31,7 @@ $cv = new CvRepository($database);
 $pages = new PageController($cv, $users);
 $auth = new AuthController($users);
 $photos = new PhotoController($cv, $auth);
+$experiences = new ExperienceController($auth, $database === null ? null : new ExperienceRepository($database));
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
@@ -44,6 +47,8 @@ try {
         case 'POST /deconnexion': $auth->logout(); break;
         case 'GET /utilisateurs': $pages->users(); break;
         case 'POST /photo': $photos->upload(); break;
+        case 'GET /experiences/ajouter': $experiences->form(); break;
+        case 'POST /experiences': $experiences->create(); break;
         default:
             Response::error(404, 'Page introuvable.');
     }
