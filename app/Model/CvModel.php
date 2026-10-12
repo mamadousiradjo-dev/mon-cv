@@ -35,6 +35,10 @@ final class CvModel
 
         try {
             $photo = $this->database->query('SELECT profile_photo_path FROM user_profile WHERE id = 1 LIMIT 1')->fetchColumn();
+            // Ancien chemin du portrait conservé lors de la fusion des dossiers d'upload.
+            if ($photo === 'images/upload/profile_1791654074.jpeg') {
+                $photo = 'images/profile_1791654074.jpeg';
+            }
             if (is_string($photo) && ((str_starts_with($photo, 'images/') && !str_contains($photo, '..')) || preg_match('~^uploads/[a-f0-9]{32}\.(?:jpg|png|webp)$~', $photo))) {
                 $cv['photo'] = $photo;
             }
