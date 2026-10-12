@@ -1,0 +1,11 @@
+{
+  "name": "mon-cv",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/projets.css -o ../public/output.css",
+    "dev:css": "tailwindcss -i ./css/projets.css -o ../public/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

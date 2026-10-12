@@ -14,7 +14,7 @@
     <div class="max-w-5xl mx-auto space-y-6">
 
         <!-- Inclusion du composant de navigation modulaire -->
-        <?php include __DIR__ . '/../navigation.php'; ?>
+        <?php require dirname(__DIR__) . '/partials/navigation.php'; ?>
 
         <!-- Carte Principale Contact -->
         <div class="bg-white rounded-2xl shadow-xl p-8 space-y-6">
@@ -59,7 +59,5 @@
 
     </div>
 
-    <script src="/config.js"></script>
-    <script src="/js/auth.js" defer></script>
 </body>
 </html>

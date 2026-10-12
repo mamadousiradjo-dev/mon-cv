@@ -7,14 +7,17 @@ final class AuthSession
 {
     public static function start(): void
     {
-        if (session_status() === PHP_SESSION_ACTIVE) return;
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            return;
+        }
+
         ini_set('session.use_strict_mode', '1');
         ini_set('session.use_only_cookies', '1');
         session_name('MONCVSESSID');
         session_set_cookie_params([
             'lifetime' => 0,
-            'path' => '/api',
-            'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+            'path' => '/',
+            'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
             'httponly' => true,
             'samesite' => 'Lax',
         ]);
@@ -24,16 +27,17 @@ final class AuthSession
     public static function token(): string
     {
         self::start();
-        if (!isset($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        if (!isset($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        }
         return $_SESSION['csrf'];
     }
 
     public static function verify(): void
     {
-        self::start();
-        $given = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+        $given = $_POST['csrf'] ?? null;
         if (!is_string($given) || !hash_equals(self::token(), $given)) {
-            Api::json(['error' => 'Session expirée. Rechargez la page.'], 403);
+            Response::error(403, 'Formulaire expiré. Rechargez la page et réessayez.');
         }
     }
 
@@ -57,5 +61,19 @@ final class AuthSession
         $_SESSION = [];
         session_regenerate_id(true);
         $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
+
+    public static function flash(string $message): void
+    {
+        self::start();
+        $_SESSION['flash'] = $message;
+    }
+
+    public static function takeFlash(): ?string
+    {
+        self::start();
+        $message = $_SESSION['flash'] ?? null;
+        unset($_SESSION['flash']);
+        return is_string($message) ? $message : null;
     }
 }

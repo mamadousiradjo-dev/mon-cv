@@ -14,7 +14,7 @@
     <div class="max-w-5xl mx-auto space-y-6">
 
         <!-- Inclusion du composant de navigation modulaire -->
-        <?php include __DIR__ . '/../navigation.php'; ?>
+        <?php require dirname(__DIR__) . '/partials/navigation.php'; ?>
 
         <!-- Carte Principale Projets -->
         <div class="bg-white rounded-2xl shadow-xl p-8 space-y-6">
@@ -41,7 +41,7 @@
                     </div>
                     <h3 class="text-base font-bold text-navy-900 mb-2">Application Web Portfolio CV</h3>
                     <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                        Développement d'une plateforme web modulaire avec pages PHP, styles Tailwind et connexion MySQL facultative. L'espace d'administration reste à développer.
+                        Développement d'une plateforme web modulaire avec pages PHP, styles Tailwind et connexion MySQL facultative. Le propriétaire peut modifier la photo du CV depuis son espace.
                     </p>
                     <div class="flex items-center space-x-2 text-xs text-slate-500 font-medium">
                         <i class="fa-brands fa-github text-slate-700"></i>
@@ -70,7 +70,5 @@
 
     </div>
 
-    <script src="/config.js"></script>
-    <script src="/js/auth.js" defer></script>
 </body>
 </html>

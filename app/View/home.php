@@ -1,3 +1,4 @@
+<?php use App\Infrastructure\View; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,7 +16,11 @@
     <div class="max-w-5xl mx-auto space-y-6">
 
         <!-- Composant de navigation modulaire -->
-        <?php include __DIR__ . '/navigation.php'; ?>
+        <?php require __DIR__ . '/partials/navigation.php'; ?>
+
+        <?php if ($flash !== null): ?>
+            <p role="status" class="bg-white rounded-xl p-4 text-sm text-navy-900"><?= View::e($flash) ?></p>
+        <?php endif; ?>
 
         <!-- Carte principale CV / Portfolio -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
@@ -25,15 +30,19 @@
                 
                 <!-- Photo du CV -->
                 <div class="relative">
-                    <img id="profile-img" src="images/MAMADOU SIRADJO BALDE.jpeg" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+                    <img id="profile-img" src="<?= View::e(View::photoUrl($cv['photo'])) ?>" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                 </div>
 
-                <form id="photo-form" class="hidden w-full space-y-2" enctype="multipart/form-data">
-                    <label for="photo-file" class="block text-xs font-semibold">Changer la photo du CV</label>
-                    <input id="photo-file" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required class="block w-full text-xs" />
-                    <button type="submit" class="bg-sky-500 hover:bg-sky-400 text-white rounded-lg px-3 py-2 text-xs">Enregistrer la photo</button>
-                    <p id="photo-message" role="status" class="text-xs" aria-live="polite"></p>
-                </form>
+                <?php if ($user !== null && $user['role'] === 'admin'): ?>
+                    <form action="/photo" method="post" enctype="multipart/form-data" class="w-full space-y-2">
+                        <input type="hidden" name="csrf" value="<?= View::e($csrf) ?>">
+                        <label for="photo-file" class="block text-xs font-semibold">Changer la photo du CV</label>
+                        <input id="photo-file" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required class="block w-full text-xs">
+                        <button type="submit" class="bg-sky-500 hover:bg-sky-400 text-white rounded-lg px-3 py-2 text-xs">
+                            Enregistrer la photo
+                        </button>
+                    </form>
+                <?php endif; ?>
 
                 <!-- Informations Personnelles -->
                 <div>
@@ -112,10 +121,10 @@
                     <div class="space-y-2">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 id="formation-diplome" class="text-sm font-semibold text-navy-900">Brevet Technique 3 (BT3) - Génie Informatique</h3>
+                                <h3 id="formation-diplome" class="text-sm font-semibold text-navy-900"><?= View::e($cv['formation']['diplome']) ?></h3>
                                 <p class="text-xs text-slate-500 mt-0.5 flex items-center space-x-1">
                                     <i class="fa-solid fa-building-columns text-slate-400 text-xs mr-1"></i>
-                                    <span id="formation-detail">Université Mahatma Gandhi • En cours (3ème année)</span>
+                                    <span id="formation-detail"><?= View::e($cv['formation']['etablissement']) ?> • <?= View::e($cv['formation']['annee']) ?></span>
                                 </p>
                             </div>
                         </div>
@@ -131,12 +140,12 @@
                     <div class="space-y-4">
                         <div>
                             <div class="flex justify-between items-center">
-                                <h3 id="experience-titre" class="text-sm font-semibold text-navy-900">Projet Web : Portfolio CV Dynamique</h3>
-                                <span id="experience-periode" class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">2026</span>
+                                <h3 id="experience-titre" class="text-sm font-semibold text-navy-900"><?= View::e($cv['experience']['titre']) ?></h3>
+                                <span id="experience-periode" class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded"><?= View::e($cv['experience']['periode']) ?></span>
                             </div>
-                            <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
+                            <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5"><?= View::e($cv['experience']['entreprise']) ?></p>
                             <p id="experience-description" class="text-xs text-slate-600 mt-1">
-                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration permet au propriétaire de gérer sa photo.
+                                <?= View::e($cv['experience']['description']) ?>
                             </p>
                         </div>
                     </div>
@@ -148,8 +157,5 @@
 
     </div>
 
-    <script src="/config.js"></script>
-    <script src="/js/auth.js" defer></script>
-    <script src="/js/app.js" defer></script>
 </body>
 </html>

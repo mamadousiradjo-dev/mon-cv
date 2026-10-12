@@ -6,7 +6,7 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-require dirname(__DIR__) . '/src/Infrastructure/Database.php';
+require dirname(__DIR__) . '/app/Infrastructure/Database.php';
 
 $pdo = App\Infrastructure\Database::connect();
 if ($pdo === null) {
