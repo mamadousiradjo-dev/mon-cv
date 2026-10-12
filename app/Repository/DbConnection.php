@@ -6,7 +6,7 @@ namespace App\Repository;
 use PDO;
 use PDOException;
 
-final class Connection
+final class DbConnection
 {
     public static function connect(): ?PDO
     {

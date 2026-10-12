@@ -17,7 +17,7 @@ Ouvrir <http://127.0.0.1:8000>. Le dossier `public/` est le seul dossier exposé
 ## Organisation MVC + Repository
 
 - `app/Model/` : données du CV et des utilisateurs, sans requête SQL ni HTML.
-- `app/Repository/` : connexion PDO et requêtes préparées pour charger et enregistrer les modèles.
+- `app/Repository/` : `DbConnection.php` ouvre MySQL ; les autres repositories chargent et enregistrent les modèles avec des requêtes préparées.
 - `app/Controller/` : choix des vues, validation des formulaires, session, réponses HTTP, droits d'accès et photo.
 - `app/View/` : pages HTML/PHP, navigation partagée et échappement des données avant affichage.
 - `public/` : point d'entrée, routeur, CSS et images publiques.

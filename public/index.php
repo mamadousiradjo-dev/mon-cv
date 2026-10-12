@@ -18,12 +18,12 @@ use App\Controller\AuthController;
 use App\Controller\PageController;
 use App\Controller\PhotoController;
 use App\Controller\Response;
-use App\Repository\Connection;
+use App\Repository\DbConnection;
 use App\Repository\CvRepository;
 use App\Repository\UserRepository;
 
 header('X-Content-Type-Options: nosniff');
-$database = Connection::connect();
+$database = DbConnection::connect();
 $users = $database === null ? null : new UserRepository($database);
 $cv = new CvRepository($database);
 $pages = new PageController($cv, $users);
