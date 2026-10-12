@@ -1,27 +1,3 @@
-<?php
-// Variables par défaut
-$user = null;
-$photoPath = 'images/MAMADOU SIRADJO BALDE.jpeg';
-
-// Inclusion sécurisée du fichier de connexion
-require_once __DIR__ . '/backend/db.php';
-
-// Si la BDD est connectée et fonctionnelle, on récupère la photo
-if (isset($pdo) && $pdo !== null) {
-    try {
-        $stmt = $pdo->query("SELECT * FROM user_profile WHERE id = 1 LIMIT 1");
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user && !empty($user['profile_photo_path'])) {
-            $candidate = $user['profile_photo_path'];
-            if (str_starts_with($candidate, 'images/') && is_file(__DIR__ . '/' . $candidate)) {
-                $photoPath = $candidate;
-            }
-        }
-    } catch (Exception $e) {
-        // En cas d'erreur SQL, on garde la photo par défaut
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -49,7 +25,7 @@ if (isset($pdo) && $pdo !== null) {
                 
                 <!-- Photo du CV -->
                 <div class="relative">
-                    <img id="profile-img" src="<?php echo htmlspecialchars($photoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+                    <img id="profile-img" src="images/MAMADOU SIRADJO BALDE.jpeg" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                 </div>
 
                 <!-- Informations Personnelles -->
@@ -129,10 +105,10 @@ if (isset($pdo) && $pdo !== null) {
                     <div class="space-y-2">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="text-sm font-semibold text-navy-900">Brevet Technique 3 (BT3) - Génie Informatique</h3>
+                                <h3 id="formation-diplome" class="text-sm font-semibold text-navy-900">Brevet Technique 3 (BT3) - Génie Informatique</h3>
                                 <p class="text-xs text-slate-500 mt-0.5 flex items-center space-x-1">
                                     <i class="fa-solid fa-building-columns text-slate-400 text-xs mr-1"></i>
-                                    <span>Université Mahatma Gandhi • En cours (3ème année)</span>
+                                    <span id="formation-detail">Université Mahatma Gandhi • En cours (3ème année)</span>
                                 </p>
                             </div>
                         </div>
@@ -148,11 +124,11 @@ if (isset($pdo) && $pdo !== null) {
                     <div class="space-y-4">
                         <div>
                             <div class="flex justify-between items-center">
-                                <h3 class="text-sm font-semibold text-navy-900">Projet Web : Portfolio CV Dynamique</h3>
-                                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">2026</span>
+                                <h3 id="experience-titre" class="text-sm font-semibold text-navy-900">Projet Web : Portfolio CV Dynamique</h3>
+                                <span id="experience-periode" class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">2026</span>
                             </div>
-                            <p class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
-                            <p class="text-xs text-slate-600 mt-1">
+                            <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
+                            <p id="experience-description" class="text-xs text-slate-600 mt-1">
                                 Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.
                             </p>
                         </div>
@@ -165,5 +141,7 @@ if (isset($pdo) && $pdo !== null) {
 
     </div>
 
+    <script src="/config.js"></script>
+    <script src="/js/app.js" defer></script>
 </body>
 </html>

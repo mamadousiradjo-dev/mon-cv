@@ -6,8 +6,9 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-require __DIR__ . '/db.php';
+require dirname(__DIR__) . '/src/Infrastructure/Database.php';
 
+$pdo = App\Infrastructure\Database::connect();
 if ($pdo === null) {
     fwrite(STDERR, "Configure DB_NAME, DB_USER et DB_PASSWORD avant l'initialisation.\n");
     exit(1);
@@ -34,8 +35,16 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS user_profile (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
-// Réexécuter ce script conserve les données existantes.
-$stmt = $pdo->prepare('INSERT IGNORE INTO user_profile (id, profile_photo_path) VALUES (1, :photo)');
-$stmt->execute(['photo' => 'images/MAMADOU SIRADJO BALDE.jpeg']);
+$pdo->prepare('INSERT IGNORE INTO user_profile (id, profile_photo_path) VALUES (1, ?)')
+    ->execute(['images/MAMADOU SIRADJO BALDE.jpeg']);
+$pdo->prepare('INSERT IGNORE INTO formations (id, diplome, etablissement, annee) VALUES (1, ?, ?, ?)')
+    ->execute(['Brevet Technique 3 (BT3) - Génie Informatique', 'Université Mahatma Gandhi', 'En cours (3ème année)']);
+$pdo->prepare('INSERT IGNORE INTO experiences (id, titre, entreprise, periode, description) VALUES (1, ?, ?, ?, ?)')
+    ->execute([
+        'Projet Web : Portfolio CV Dynamique',
+        'Projet Académique / Personnel',
+        '2026',
+        "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.",
+    ]);
 
-echo "Tables créées ou déjà présentes. Aucune donnée effacée.\n";
+echo "Tables et données de démonstration prêtes. Aucune donnée effacée.\n";
