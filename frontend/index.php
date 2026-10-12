@@ -28,6 +28,13 @@
                     <img id="profile-img" src="images/MAMADOU SIRADJO BALDE.jpeg" alt="Portrait de Mamadou Siradjo Baldé" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
                 </div>
 
+                <form id="photo-form" class="hidden w-full space-y-2" enctype="multipart/form-data">
+                    <label for="photo-file" class="block text-xs font-semibold">Changer la photo du CV</label>
+                    <input id="photo-file" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required class="block w-full text-xs" />
+                    <button type="submit" class="bg-sky-500 hover:bg-sky-400 text-white rounded-lg px-3 py-2 text-xs">Enregistrer la photo</button>
+                    <p id="photo-message" role="status" class="text-xs" aria-live="polite"></p>
+                </form>
+
                 <!-- Informations Personnelles -->
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">MAMADOU SIRADJO BALDE</h1>
@@ -129,7 +136,7 @@
                             </div>
                             <p id="experience-entreprise" class="text-xs text-sky-600 font-medium mt-0.5">Projet Académique / Personnel</p>
                             <p id="experience-description" class="text-xs text-slate-600 mt-1">
-                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.
+                                Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration permet au propriétaire de gérer sa photo.
                             </p>
                         </div>
                     </div>
@@ -142,6 +149,7 @@
     </div>
 
     <script src="/config.js"></script>
+    <script src="/js/auth.js" defer></script>
     <script src="/js/app.js" defer></script>
 </body>
 </html>

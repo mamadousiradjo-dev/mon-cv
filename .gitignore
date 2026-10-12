@@ -4,3 +4,7 @@ node_modules/
 frontend/images/upload/*
 
 .DS_Store
+
+# Photos envoyées par le propriétaire : données locales, jamais dans Git.
+backend/storage/uploads/*
+!backend/storage/uploads/.gitkeep

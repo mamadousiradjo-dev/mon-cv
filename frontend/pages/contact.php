@@ -59,5 +59,7 @@
 
     </div>
 
+    <script src="/config.js"></script>
+    <script src="/js/auth.js" defer></script>
 </body>
 </html>

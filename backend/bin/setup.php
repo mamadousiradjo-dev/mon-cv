@@ -35,6 +35,20 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS user_profile (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
+$pdo->exec("CREATE TABLE IF NOT EXISTS utilisateurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(80) NOT NULL,
+    email VARCHAR(190) NOT NULL UNIQUE,
+    mot_de_passe VARCHAR(255) NOT NULL,
+    role ENUM('user', 'admin') NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+// Les anciennes bases conservent leurs comptes ; on ajoute seulement le rôle manquant.
+$roleColumn = $pdo->query("SHOW COLUMNS FROM utilisateurs LIKE 'role'")->fetch();
+if ($roleColumn === false) {
+    $pdo->exec("ALTER TABLE utilisateurs ADD COLUMN role ENUM('user', 'admin') NOT NULL DEFAULT 'user'");
+}
+
 $pdo->prepare('INSERT IGNORE INTO user_profile (id, profile_photo_path) VALUES (1, ?)')
     ->execute(['images/MAMADOU SIRADJO BALDE.jpeg']);
 $pdo->prepare('INSERT IGNORE INTO formations (id, diplome, etablissement, annee) VALUES (1, ?, ?, ?)')
@@ -46,5 +60,11 @@ $pdo->prepare('INSERT IGNORE INTO experiences (id, titre, entreprise, periode, d
         '2026',
         "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.",
     ]);
+
+// Mettre à jour uniquement la phrase de démonstration des anciennes installations.
+$oldDescription = "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.";
+$newDescription = "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration permet au propriétaire de gérer sa photo.";
+$pdo->prepare('UPDATE experiences SET description = ? WHERE id = 1 AND description = ?')
+    ->execute([$newDescription, $oldDescription]);
 
 echo "Tables et données de démonstration prêtes. Aucune donnée effacée.\n";

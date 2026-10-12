@@ -25,7 +25,7 @@ final class CvModel
                 'titre' => 'Projet Web : Portfolio CV Dynamique',
                 'entreprise' => 'Projet Académique / Personnel',
                 'periode' => '2026',
-                'description' => "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration reste à développer.",
+                'description' => "Conception et développement d'un site CV dynamique avec PHP, MySQL (PDO), Tailwind CSS ; l'espace d'administration permet au propriétaire de gérer sa photo.",
             ],
         ];
 
@@ -35,7 +35,7 @@ final class CvModel
 
         try {
             $photo = $this->database->query('SELECT profile_photo_path FROM user_profile WHERE id = 1 LIMIT 1')->fetchColumn();
-            if (is_string($photo) && str_starts_with($photo, 'images/') && !str_contains($photo, '..')) {
+            if (is_string($photo) && ((str_starts_with($photo, 'images/') && !str_contains($photo, '..')) || preg_match('~^uploads/[a-f0-9]{32}\.(?:jpg|png|webp)$~', $photo))) {
                 $cv['photo'] = $photo;
             }
 
