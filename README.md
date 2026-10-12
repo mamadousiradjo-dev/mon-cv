@@ -4,10 +4,9 @@ Le projet affiche déjà deux livres. À toi d'ajouter les autres fonctionnalit�
 
 ## 1. Lancer le projet
 
-Il faut **PHP avec PDO SQLite**. Depuis la racine du dépôt, entre dans le dossier de l’exercice :
+Il faut **PHP avec PDO SQLite**. Depuis la racine du dépôt :
 
 ```sh
-cd bibliotheque
 php bin/setup.php
 php -S 127.0.0.1:8001 -t public public/index.php
 ```
